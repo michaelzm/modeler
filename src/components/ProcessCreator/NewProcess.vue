@@ -5,7 +5,7 @@
                 <h3>Neuer Prozess</h3>
             </div>
             <div class="new-process-illustration">
-                <div class="process-image"></div>
+                <div class="svg-process-image"></div>
             </div>
             <div class="divider"></div>
         </div>
@@ -52,7 +52,7 @@ export default {
         height: 10vh;
         width: 50vw;
     }
-    .process-image {
+    .svg-process-image {
         background-image: url(./assets/illustration-new-process.svg);
         background-repeat: no-repeat;
         height: 100%;
@@ -101,7 +101,7 @@ export default {
     }
 
     .menu-go-next {
-        position: absolute;
+        position: relative;
         bottom: 4vh;
         right: 4vh;
     }
