@@ -1,6 +1,6 @@
 <template>
   <div class="processCreator">
-    <BaseNewProcessStep/>
+    <ProcessOverview/>
   </div>
 </template>
 

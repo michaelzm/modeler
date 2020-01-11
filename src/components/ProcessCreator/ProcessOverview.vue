@@ -10,13 +10,18 @@
             <div class="add-process-step">
                 <div class="svg-add-process-step"/>
             </div>
+            <FinishedProcessStep></FinishedProcessStep>
         </div>
     </div>
 </template>
 
 <script>
+import FinishedProcessStep from './ProcessElements/FinishedProcessStep'
 export default {
-    name: 'ProcessOverview'
+    name: 'ProcessOverview',
+    components: {
+        FinishedProcessStep
+    }
 }
 </script>
 
