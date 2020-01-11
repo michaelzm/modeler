@@ -1,0 +1,24 @@
+// global css in Sass 
+
+li {
+    list-style: none;
+}
+
+ul {
+    padding: 0;
+}
+
+body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    color: #444444;
+    background-color: #FAFAFA;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.space-even {
+    justify-content: space-evenly;
+}
