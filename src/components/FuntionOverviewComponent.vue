@@ -1,5 +1,5 @@
 <template>
-  <div class="outer-square">
+  <div class="outer-square" @click="goToFunction">
     <div class="function-title" v-text="this.data.title">Process Creator</div>
     <div class="function-icon">Icon</div>
     <div
@@ -13,7 +13,12 @@
 <script>
 export default {
   name: "FunctionOverviewComponent",
-  props: ['data']
+  props: ['data'],
+  methods: {
+      goToFunction() {
+          this.$emit("goTo", this.data.title);
+      }
+  }
   
 };
 </script>

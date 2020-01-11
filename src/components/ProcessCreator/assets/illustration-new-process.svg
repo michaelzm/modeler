@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="353.459" height="48" viewBox="0 0 353.459 48">
+  <g id="illustration" transform="translate(-783.5 -140)">
+    <g id="Start" transform="translate(783.5 140)" fill="#fff" stroke="#ff085e" stroke-width="3">
+      <circle cx="24" cy="24" r="24" stroke="none"/>
+      <circle cx="24" cy="24" r="22.5" fill="none"/>
+    </g>
+    <g id="END" transform="translate(1088.959 140)" fill="#fff" stroke="#3fbc07" stroke-width="8">
+      <circle cx="24" cy="24" r="24" stroke="none"/>
+      <circle cx="24" cy="24" r="20" fill="none"/>
+    </g>
+    <g id="Rechteck_29" data-name="Rechteck 29" transform="translate(895 140)" fill="#106cff" stroke="#707070" stroke-width="1">
+      <rect width="129" height="48" rx="10" stroke="none"/>
+      <rect x="0.5" y="0.5" width="128" height="47" rx="9.5" fill="none"/>
+    </g>
+    <g id="Gruppe_5" data-name="Gruppe 5" transform="translate(368.5 -356)">
+      <line id="Linie_5" data-name="Linie 5" x2="63" transform="translate(463 520)" fill="none" stroke="#707070" stroke-width="1"/>
+      <line id="Linie_8" data-name="Linie 8" x2="8" y2="8" transform="translate(518.5 512.5)" fill="none" stroke="#707070" stroke-width="1"/>
+      <line id="Linie_9" data-name="Linie 9" x1="8" y2="8" transform="translate(518.5 520)" fill="none" stroke="#707070" stroke-width="1"/>
+    </g>
+    <g id="Gruppe_8" data-name="Gruppe 8" transform="translate(561.5 -356)">
+      <line id="Linie_5-2" data-name="Linie 5" x2="63" transform="translate(463 520)" fill="none" stroke="#707070" stroke-width="1"/>
+      <line id="Linie_8-2" data-name="Linie 8" x2="8" y2="8" transform="translate(518.5 512.5)" fill="none" stroke="#707070" stroke-width="1"/>
+      <line id="Linie_9-2" data-name="Linie 9" x1="8" y2="8" transform="translate(518.5 520)" fill="none" stroke="#707070" stroke-width="1"/>
+    </g>
+  </g>
+</svg>

@@ -19,6 +19,23 @@ body {
     flex-direction: row;
 }
 
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
 .space-even {
     justify-content: space-evenly;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.center-hor {
+    align-items: center
+}
+
+.center-ver {
+    justify-content: center
 }
