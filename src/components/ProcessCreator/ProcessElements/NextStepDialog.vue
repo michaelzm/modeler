@@ -83,6 +83,18 @@ export default {
         }
     },
     methods: {
+        resetChoices() {
+            this.isChoiceClicked = false;
+            this.isSimpleNext = false;
+            this.isEventNext = false;
+            this.isSplitNext = false;
+            this.eventTime = false;
+            this.eventFailure = false;
+            this.eventMessage = false;
+            this.andSplit = false;
+            this.xorSplit = false;
+            this.orSplit = false;
+        },
         choiceClicked(choice){
             switch(choice){
                 case "simpleNext":
@@ -98,8 +110,7 @@ export default {
                     console.warn("no such choice defined");
                     break;
             }
-
-            this.isChoiceClicked = true;
+            this.resetChoices();
         },
         setNextStepEvent (choice) {
             switch(choice){
@@ -149,7 +160,7 @@ export default {
 
     .next-step-connector-choice {
         margin-top: 20px;
-        width: 40vw;
+        width: 30vw;
     }
 
     .choice-name {

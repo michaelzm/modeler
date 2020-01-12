@@ -7,13 +7,14 @@
         </div>
         <div class="process-editor">
             <!-- start with blank process, only show add element -->
-            <div class="add-process-step">
+        <!--     <div class="add-process-step">
                 <div class="svg-add-process-step"/>
-            </div>
+            </div> -->
             <div class="flex-column center-hor">
-                <FinishedProcessStep @open-navbar="openSidebar" @show-nextstep="showNextStep"/>
+                <FinishedProcessStep v-for="(item, index) in activities" :activity="item" :key="index" @open-navbar="openSidebar" @show-nextstep="showNextStep"/>
             </div>
-            <div class="next-step-dialog" v-if="displayNextStep">
+            <!-- dont show if process activity is open -->
+            <div class="next-step-dialog" v-if="displayNextStep && !isStepInformationVisible">
                 <NextStepDialog/>
             </div>
         </div>
@@ -29,6 +30,11 @@ export default {
         return {
             displayNextStep: false,
             isStepInformationVisible: false,
+            activities: [
+                {name:'Ware angekommen', id:'28241628', input_data:['Auftragsliste'], input_it: [], output_data:['Lieferantenbestätigung']}, 
+                {name:"Ware überprüfen", id:'83744218', input_data:['Ware'], input_it: ['Prüfsystem'], output_data:['Druck Überprüfung']}, 
+                {name:"Ware ins Lager transportieren", id:'55361628', input_data:[], input_it: [], output_data:['Lagerschein']}
+            ]
         }
     },
     components: {
@@ -59,7 +65,10 @@ export default {
         },
         hideNextStep() {
             this.displayNextStep = false;
-        }
+        },
+        addNewActivity(activity) {
+            this.activities.push(activity)
+        },
     }
 }
 </script>

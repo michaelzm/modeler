@@ -2,42 +2,47 @@
   <div class="finished-process-step flex-row">
 
     <!-- left side informations -->
-    <div class="input-informations flex-column " v-if="this.isStepSelected || this.isStepMarked">
-        <div class="input-data-container flex-row"  @click="toggleInputDataActive" >
-            <div class="input-data noselect bold">Benötigte Dokumente</div>
-            <div class="circle circle-right" v-bind:class="{inputDataSelected: isInputDataSelected}"></div>
+    <transition name="fade">
+        <div class="input-informations flex-column " v-if="this.isActivityClicked">
+            <div class="input-data-container flex-row"  @click="markActive('input-data')" >
+                <div class="input-data noselect bold">Benötigte Dokumente</div>
+                <div class="circle circle-right" v-bind:class="{inputDataSelected: isInputDataSelected}"></div>
+            </div>
+            <div class="input-it-container flex-row" @click="markActive('input-it')" >
+                <div class="input-it noselect bold">Verwendete Software / IT</div>
+                <div class="circle circle-right" v-bind:class="{inputItSelected: isInputItSelected}"></div>
+            </div>
         </div>
-
-      <div class="input-it-container flex-row" @click="toggleInputItActive" >
-        <div class="input-it noselect bold">Verwendete Software / IT</div>
-        <div class="circle circle-right" v-bind:class="{inputItSelected: isInputItSelected}"></div>
-      </div>
-    </div>
+    </transition>
 
     <!-- process step and next step -->
     <div class="center-informations flex-column center-hor">
       <div
         class="process-step noselect center-text-ver-hor"
-        v-bind:class="{ selected: isStepSelected, marked: isStepMarked}"
-        @click="toggleProcessStepActive"
+        v-bind:class="{ selected: isActivityActive, marked: isActivitySelected}"
+        @click="markActive('activity')"
       >
-      <div class="process-step-name bold">
-      Ware trifft ein
+      <div class="process-step-name bold" v-text="activity.name">
+          Placeholder
       </div>
         <div class="delete-icon">
-          <div class="svg-delete-process-step" v-if="this.isStepSelected" />
+          <div class="svg-delete-process-step" v-if="this.isActivityActive" />
         </div>
       </div>
-      <div class="next-process-step-container flex-row" @click="toggleNextStep" v-if="this.isStepSelected || this.isStepMarked">
+      <div class="next-process-step-container flex-row" @click="toggleNextStep" v-if="this.isActivityClicked">
         <div class="next-process-step noselect bold">Nächster Schritt</div>
         <div class="circle circle-right"></div>
       </div>
     </div>
+    
     <!-- right side informations -->
-    <div class="output-informations noselect flex-row"  v-if="this.isStepSelected || this.isStepMarked" @click="toggleOutputDataActive">
-        <div class="circle circle-left" v-bind:class="{outputDataSelected: isOutputDataSelected}"></div>
-      <div class="output-data bold">Entstehende Daten</div>
-    </div>
+    <transition name="fade">
+        <div class="output-informations noselect flex-row"  v-if="this.isActivityClicked" @click="markActive('output-data')">
+            <div class="circle circle-left" v-bind:class="{outputDataSelected: isOutputDataSelected}"></div>
+            <div class="output-data bold">Entstehende Daten</div>
+        </div>
+    </transition>
+    
   </div>
 </template>
 
@@ -46,61 +51,73 @@ export default {
   name: "FinishedProcessStep",
   data() {
     return {
-      isStepSelected: false,
-      isStepMarked: false,
-      isInputDataSelected: false,
-      isInputItSelected: false,
-      isOutputDataSelected: false,
-      isNextStepActive: false,
+        //show input output
+        isActivityClicked: false,
+        
+        //show red border and delete icon
+        isActivityActive: false,
+
+        //make elements colored
+        isActivitySelected: false,
+        isInputDataSelected: false,
+        isInputItSelected: false,
+        isOutputDataSelected: false,
+        isNextStepActive: false,
     };
   },
+  props: ["activity"],
   methods: {
-    toggleProcessStepActive() {
-      //mark selected
-      if (!this.isStepSelected && !this.isStepMarked) {
-        //first click toggle red delte
-        this.isStepSelected = true;
-      } 
-      else if (this.isStepMarked){
-          this.isStepMarked = false;
-          this.isStepSelected = true;
-      }else {
-        //second click toggles further infos
-        this.isStepSelected = false;
-        this.isStepMarked = true;
-      }
-    },
     unselectAll() {
-      this.isStepMarked = false;
+      this.isActivitySelected = false;
       this.isInputDataSelected = false;
       this.isInputItSelected = false;
       this.isOutputDataSelected = false;
-      this.isNextStepActive = false;
-    },
-    toggleInputDataActive() {
-        this.isInputDataSelected = !this.isInputDataSelected;
-        if(this.isInputDataSelected){
-            this.$emit("open-navbar", "input-data")
-        }
-    },
-    toggleOutputDataActive() {
-        this.isOutputDataSelected = !this.isOutputDataSelected;
-        if(this.isOutputDataSelected){
-            this.$emit("open-navbar", "output-data")
-        }
-
-    },
-    toggleInputItActive() {
-        this.isInputItSelected = !this.isInputItSelected;
-        if(this.isInputItSelected){
-            this.$emit("open-navbar", "input-it")
-        }
     },
     toggleNextStep () {
-        this.isStepMarked = false;
-        this.isStepSelected = false;
+        this.isActivitySelected = false;
+        this.isActivityClicked = false;
         this.isNextStepActive = !this.isNextStepActive;
         this.$emit("show-nextstep");
+    },
+    markActive(type){
+        //first check if red border exists and if so, remove it
+        if(type !== "activity" && this.isActivityActive){
+            this.isActivityActive = false;
+        }
+
+        //next disable the prev selected element
+        this.unselectAll();
+        switch(type){
+            case "input-it":
+                this.isInputItSelected = true;
+                break;
+            case "input-data":
+                this.isInputDataSelected = true;
+                break;
+            case "output-data":
+                this.isOutputDataSelected = true;
+                break;
+            case "activity":
+                if(!this.isActivityClicked){
+                    //first clicked,  show informations
+                    this.isActivityClicked = true;
+                    
+                    //also mark activity red
+                    this.isActivityActive = true;
+                } else if(this.isActivityActive){
+                    //if red border active and we click, we should remove red border and mark activity
+                    this.isActivityActive = false;
+                    this.isActivitySelected = true;
+                }
+                else {
+                    this.isActivityActive = true;
+                }
+
+                break;
+            default:
+                console.warn("no such type defined");
+                break;
+        }
     }
   }
 };
