@@ -11,18 +11,29 @@
                 <div class="svg-add-process-step"/>
             </div>
             <div class="flex-column center-hor">
-            <FinishedProcessStep @open-navbar="openSidebar"/>
+                <FinishedProcessStep @open-navbar="openSidebar" @show-nextstep="showNextStep"/>
+            </div>
+            <div class="next-step-dialog" v-if="displayNextStep">
+                <NextStepDialog/>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import FinishedProcessStep from './ProcessElements/FinishedProcessStep'
+import FinishedProcessStep from './ProcessElements/FinishedProcessStep';
+import NextStepDialog from './ProcessElements/NextStepDialog';
 export default {
     name: 'ProcessOverview',
+    data() {
+        return {
+            displayNextStep: false,
+            isStepInformationVisible: false,
+        }
+    },
     components: {
-        FinishedProcessStep
+        FinishedProcessStep,
+        NextStepDialog
     },
     methods: {
         openSidebar (data) {
@@ -40,7 +51,15 @@ export default {
                     console.log("no such event registered");
                     break;
             }
+
+            this.isStepInformationVisible = true;
         },
+        showNextStep() {
+            this.displayNextStep = true;
+        },
+        hideNextStep() {
+            this.displayNextStep = false;
+        }
     }
 }
 </script>

@@ -4,12 +4,12 @@
     <!-- left side informations -->
     <div class="input-informations flex-column " v-if="this.isStepSelected || this.isStepMarked">
         <div class="input-data-container flex-row"  @click="toggleInputDataActive" >
-            <div class="input-data noselect" >Benötigte Dokumente</div>
+            <div class="input-data noselect bold">Benötigte Dokumente</div>
             <div class="circle circle-right" v-bind:class="{inputDataSelected: isInputDataSelected}"></div>
         </div>
 
       <div class="input-it-container flex-row" @click="toggleInputItActive" >
-        <div class="input-it noselect">Verwendete Software / IT</div>
+        <div class="input-it noselect bold">Verwendete Software / IT</div>
         <div class="circle circle-right" v-bind:class="{inputItSelected: isInputItSelected}"></div>
       </div>
     </div>
@@ -21,7 +21,7 @@
         v-bind:class="{ selected: isStepSelected, marked: isStepMarked}"
         @click="toggleProcessStepActive"
       >
-      <div class="process-step-name">
+      <div class="process-step-name bold">
       Ware trifft ein
       </div>
         <div class="delete-icon">
@@ -29,14 +29,14 @@
         </div>
       </div>
       <div class="next-process-step-container flex-row" @click="toggleNextStep" v-if="this.isStepSelected || this.isStepMarked">
-        <div class="next-process-step noselect">Nächster Schritt</div>
+        <div class="next-process-step noselect bold">Nächster Schritt</div>
         <div class="circle circle-right"></div>
       </div>
     </div>
     <!-- right side informations -->
     <div class="output-informations noselect flex-row"  v-if="this.isStepSelected || this.isStepMarked" @click="toggleOutputDataActive">
         <div class="circle circle-left" v-bind:class="{outputDataSelected: isOutputDataSelected}"></div>
-      <div class="output-data">Entstehende Daten</div>
+      <div class="output-data bold">Entstehende Daten</div>
     </div>
   </div>
 </template>
@@ -96,13 +96,11 @@ export default {
             this.$emit("open-navbar", "input-it")
         }
     },
-    openInformationBar () {
-        this.$emit("display-informations")
-    },
     toggleNextStep () {
         this.isStepMarked = false;
         this.isStepSelected = false;
         this.isNextStepActive = !this.isNextStepActive;
+        this.$emit("show-nextstep");
     }
   }
 };
