@@ -24,7 +24,7 @@
         </div>
         <div class="current-step-informations">
             <!-- component changes in here -->
-            <OutputInformationsStep></OutputInformationsStep>
+            <OutputInformationsStep/>>
         </div>
         <div class="menu-bottom flex-row space-between">
             <div class="button-go-prev">
@@ -38,9 +38,9 @@
 </template>
 
 <script>
-import GeneralInformationsStep from './ProcessSteps/GeneralInformationsStep'
-import InputInformationsStep from './ProcessSteps/InputInformationsStep'
-import OutputInformationsStep from './ProcessSteps/OutputInformationsStep'
+import GeneralInformationsStep from './ActivityCreationSteps/GeneralInformationsStep'
+import InputInformationsStep from './ActivityCreationSteps/InputInformationsStep'
+import OutputInformationsStep from './ActivityCreationSteps/OutputInformationsStep'
 
 export default {
     name: "BaseNewProcessStep",
