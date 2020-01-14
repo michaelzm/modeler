@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="menu-go-next">
+        <div class="menu-go-next" @click="finishProcessCreation">
             weiter >
         </div>
     </div>
@@ -41,6 +41,9 @@ export default {
     computed: {
     },
     methods: {
+        finishProcessCreation() {
+            this.$emit("finish-process")
+        }
     }
 }
 </script>

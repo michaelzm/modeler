@@ -5,6 +5,7 @@
                  zur Übersicht
             </div>
         </div>
+        <Sidebar v-if="this.isStepInformationVisible"/>
         <div class="process-editor checkered">
          
             <div class="flex-column center-hor">
@@ -20,6 +21,7 @@
 </template>
 
 <script>
+import Sidebar from './EditorElements/Sidebar';
 import FinishedProcessStep from './ProcessElements/FinishedProcessStep';
 import NextStepDialog from './ProcessElements/NextStepDialog';
 import ConnectingBlock from './ProcessElements/ConnectingBlock';
@@ -36,7 +38,8 @@ export default {
     components: {
         FinishedProcessStep,
         NextStepDialog,
-        ConnectingBlock
+        ConnectingBlock,
+        Sidebar
     },
     computed: {
       vuexActivities (){
@@ -54,6 +57,9 @@ export default {
                     break;
                 case "output-data":
                     console.log("open sidebar output it");
+                    break;
+                case "activity":
+                    console.log("open sidebar activity");
                     break;
                 default:
                     console.log("no such event registered");

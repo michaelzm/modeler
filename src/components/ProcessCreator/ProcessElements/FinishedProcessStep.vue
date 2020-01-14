@@ -96,11 +96,14 @@ export default {
         switch(type){
             case "input-it":
                 this.isInputItSelected = true;
+                this.$emit("open-navbar", "input-it")
                 break;
             case "input-data":
                 this.isInputDataSelected = true;
+                this.$emit("open-navbar", "input-data")
                 break;
             case "output-data":
+                this.$emit("open-navbar", "output-data")
                 this.isOutputDataSelected = true;
                 break;
             case "activity":
@@ -114,6 +117,7 @@ export default {
                     //if red border active and we click, we should remove red border and mark activity
                     this.isActivityActive = false;
                     this.isActivitySelected = true;
+                    this.$emit("open-navbar", "activity")
                 }
                 else {
                     this.isActivityActive = true;
@@ -212,6 +216,7 @@ export default {
   border-color: red;
   color: red;
   transition: border-color 0.5s;
+   box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(245, 111, 111, 0.2);
 }
 
 .inputDataMarkLine {
@@ -221,6 +226,7 @@ export default {
 .inputDataSelected {
     background-color: red;
     transition: background-color 0.5s;
+     box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(255, 22, 22, 0.2);
 }
 
 .inputItMarkLine {
@@ -230,6 +236,7 @@ export default {
 .inputItSelected {
     background-color: pink;
     transition: background-color 0.5s;
+     box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(253, 188, 245, 0.2);
 }
 
 .outputDataMarkLine {
@@ -239,10 +246,12 @@ export default {
 .outputDataSelected {
     background-color: #00FF14;
     transition: background-color 0.5s;
+    box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(53, 255, 27, 0.2);
 }
 
 .marked {
     background-color: #5db4ff !important;
+    box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(33, 85, 255, 0.2);
     transition: background-color 0.5s;
 }
 

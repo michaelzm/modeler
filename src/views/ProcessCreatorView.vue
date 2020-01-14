@@ -1,7 +1,7 @@
 <template>
     <div>
       <ProcessOverview v-if="displayProcessOverview" @create-new-activity="goTo"/>
-      <CreateNewProcess v-if="displayCreateNewProcess"/>
+      <CreateNewProcess v-if="displayCreateNewProcess" @finish-process="saveProcess"/>
       <BaseNewActivity v-if="displayCreateNewActivity" @finish-activity="saveActivity"/>
     </div>
 </template>
@@ -20,14 +20,18 @@ export default {
     data() {
         return {
             displayCreateNewActivity: false,
-            displayProcessOverview: true,
-            displayCreateNewProcess: false,
+            displayProcessOverview: false,
+            displayCreateNewProcess: true,
         }
     },
     methods: {
         saveActivity() {
             let activity = {name:'Ware im System', id:'28241628', input_data:['Auftragsliste'], input_it: [], output_data:['Lieferantenbestätigung']}
             this.$store.dispatch('addActivityAction', {activity})
+            this.goTo("displayOverview")
+        },
+        saveProcess() {
+            //save provess to vuex
             this.goTo("displayOverview")
         },
         disableAll() {
