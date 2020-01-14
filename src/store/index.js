@@ -10,15 +10,21 @@ Vue.use(Vuex)
  */
 const activitiesModule = {
   state: {
-    count: 2,
-    activities: [
-      {name:'Ware angekommen', id:'28241628', input_data:['Auftragsliste'], input_it: [], output_data:['Lieferantenbestätigung']}, 
-  ],
+    process: {
+      activities: [
+        {name:'Ware angekommen', id:'28241628', input_data:['Auftragsliste'], input_it: [], output_data:['Lieferantenbestätigung']}, 
+      ],
+      name: 'Warenanlieferung',
+      descirption: 'Dieser Prozess beschreibt die Handhabung von Materiallieferungen',
+      category:'Logistik',
+      id: "1231231231"
+
+    }
   },
   getters: {},
   mutations: {
     addActivityMutation(state, payload){
-      state.activities.push(payload.activity)
+      state.process.activities.push(payload.activity)
     }
   },
   actions: {
@@ -27,7 +33,9 @@ const activitiesModule = {
     }
   }
 }
-
+/**
+ * GENERAL STORE
+ */
 export default new Vuex.Store({
   state: {
     count: 12,

@@ -1,8 +1,8 @@
 <template>
     <div>
-      <ProcessOverview v-if="displayProcessOverview"/>
+      <ProcessOverview v-if="displayProcessOverview" @create-new-activity="goTo"/>
       <CreateNewProcess v-if="displayCreateNewProcess"/>
-      <BaseNewActivity v-if="displayCreateNewActivity" @finish-activity="createActivity"/>
+      <BaseNewActivity v-if="displayCreateNewActivity" @finish-activity="saveActivity"/>
     </div>
 </template>
 
@@ -19,13 +19,13 @@ export default {
     },
     data() {
         return {
-            displayCreateNewActivity: true,
-            displayProcessOverview: false,
+            displayCreateNewActivity: false,
+            displayProcessOverview: true,
             displayCreateNewProcess: false,
         }
     },
     methods: {
-        createActivity() {
+        saveActivity() {
             let activity = {name:'Ware im System', id:'28241628', input_data:['Auftragsliste'], input_it: [], output_data:['Lieferantenbestätigung']}
             this.$store.dispatch('addActivityAction', {activity})
             this.goTo("displayOverview")
@@ -41,7 +41,7 @@ export default {
 
           switch(functionality){
             case "createActivity":
-              ths.displayCreateNewActivity = true;
+              this.displayCreateNewActivity = true;
               break;
             case "createProcess":
               this.displayCreateNewProcess = true;

@@ -40,7 +40,7 @@ export default {
     },
     computed: {
       vuexActivities (){
-        return this.$store.state.activitiesModule.activities
+        return this.$store.state.activitiesModule.process.activities
       }
     },
     methods: {
@@ -83,7 +83,7 @@ export default {
             }
         },
         createNewActivity() {
-            this.$emit("create-new-activity")
+            this.$emit("create-new-activity", "createActivity")
         },
     }
 }
