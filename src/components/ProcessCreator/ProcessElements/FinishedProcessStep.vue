@@ -18,15 +18,15 @@
     <!-- process step and next step -->
     <div class="center-informations flex-column center-hor">
       <div
-        class="process-step noselect center-text-ver-hor"
+        class="process-step noselect flex-column"
         v-bind:class="{ selected: isActivityActive, marked: isActivitySelected}"
         @click="markActive('activity')"
       >
-      <div class="process-step-name bold" v-text="activity.name">
-          Placeholder
-      </div>
         <div class="delete-icon">
           <div class="svg-delete-process-step" v-if="this.isActivityActive" />
+        </div>
+        <div class="process-step-name bold" v-text="activity.name">
+          Placeholder
         </div>
       </div>
       <div class="next-process-step-container flex-row" @click="toggleNextStep" v-if="this.isActivityClicked">
@@ -152,6 +152,19 @@ export default {
     max-width: 250px;
 }
 
+.process-step-name {
+    align-self: center;
+    justify-self: flex-end;
+}
+
+.delete-icon {
+    width: 3vh;
+    height: 3vh;
+    position: relative;
+    top: -1vh;
+    left: -1vh;
+}
+
 .circle {
     height: 4vh;
     width: 4vh;
@@ -194,13 +207,7 @@ export default {
     transition: background-color 0.5s;
 }
 
-.delete-icon {
-    width: 3vh;
-    height: 3vh;
-    position: relative;
-    top: -50px;
-    left: -15px;
-}
+
 
 .next-process-step-container {
     margin-top: 3vh;

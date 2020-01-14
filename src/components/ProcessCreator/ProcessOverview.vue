@@ -6,16 +6,14 @@
             </div>
         </div>
         <div class="process-editor">
-            <!-- start with blank process, only show add element -->
-        <!--     <div class="add-process-step">
-                <div class="svg-add-process-step"/>
-            </div> -->
+         
             <div class="flex-column center-hor">
                 <FinishedProcessStep v-for="(item, index) in activities" :activity="item" :key="index" @open-navbar="openSidebar" @show-nextstep="showNextStep"/>
+                <ConnectingBlock v-for="(item, index) in connectingBlocks" :blockData="item" :key="'CB'+index"/>
             </div>
             <!-- dont show if process activity is open -->
             <div class="next-step-dialog" v-if="displayNextStep && !isStepInformationVisible">
-                <NextStepDialog/>
+                <NextStepDialog @final-choice="createConnectingBlock"/>
             </div>
         </div>
     </div>
@@ -24,6 +22,7 @@
 <script>
 import FinishedProcessStep from './ProcessElements/FinishedProcessStep';
 import NextStepDialog from './ProcessElements/NextStepDialog';
+import ConnectingBlock from './ProcessElements/ConnectingBlock';
 export default {
     name: 'ProcessOverview',
     data() {
@@ -32,14 +31,15 @@ export default {
             isStepInformationVisible: false,
             activities: [
                 {name:'Ware angekommen', id:'28241628', input_data:['Auftragsliste'], input_it: [], output_data:['Lieferantenbestätigung']}, 
-                {name:"Ware überprüfen", id:'83744218', input_data:['Ware'], input_it: ['Prüfsystem'], output_data:['Druck Überprüfung']}, 
-                {name:"Ware ins Lager transportieren", id:'55361628', input_data:[], input_it: [], output_data:['Lagerschein']}
-            ]
+            ],
+            connectingBlocks : [],
+
         }
     },
     components: {
         FinishedProcessStep,
-        NextStepDialog
+        NextStepDialog,
+        ConnectingBlock
     },
     methods: {
         openSidebar (data) {
@@ -69,6 +69,9 @@ export default {
         addNewActivity(activity) {
             this.activities.push(activity)
         },
+        createConnectingBlock(block) {
+            this.connectingBlocks.push(block)
+        },
     }
 }
 </script>
@@ -82,18 +85,5 @@ export default {
       .menu-back-to-overview {
           margin-left: 20px;
       }
-    }
-
-    .add-process-step {
-        height: 4vh;
-        margin-top: 4vh;
-    }
-
-    .svg-add-process-step {
-        background-image: url(./assets/add-process-step.svg);
-        background-repeat: no-repeat;
-        height: 100%;
-        width: 100%;
-        background-size: 100% 100%;
     }
 </style>
