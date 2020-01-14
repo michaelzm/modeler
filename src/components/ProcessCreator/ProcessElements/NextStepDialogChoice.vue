@@ -23,6 +23,7 @@ export default {
     }
 
     .choice-name {
+        background-color: white;
         margin-left: 10px;
         padding-left: 20px;
         padding-right: 30px;

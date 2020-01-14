@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import FunctionOverviewComponent from './FunctionOverviewComponent.vue'
+import FunctionOverviewComponent from '@/components/FunctionOverviewComponent.vue'
 export default {
     name: 'SmartModeler',
     data() {

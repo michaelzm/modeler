@@ -11,7 +11,7 @@
                 <div class="svg-connecting-arrow"></div>
             </div>
          <!-- option to add next step -->
-        <div class="add-process-step">
+        <div class="add-process-step" @click="createNewActivity">
             <div class="svg-add-process-step"/>
         </div>
     </div>
@@ -28,6 +28,9 @@ export default {
             } else {
                 return false;
             }
+        },
+        createNewActivity() {
+            this.$emit("create-new-activity")
         }
     },
 }
@@ -36,6 +39,7 @@ export default {
 <style lang="scss">
     .connecting-to-next-step {
         border: 1px solid rgb(0, 174, 243);
+        background-color:rgb(0, 174, 243);
         border-radius: 50px;
         padding-left: 1vw;
         padding-right: 1vw;

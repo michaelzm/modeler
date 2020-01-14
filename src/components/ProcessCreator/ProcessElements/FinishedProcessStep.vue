@@ -24,8 +24,8 @@
         v-bind:class="{ selected: isActivityActive, marked: isActivitySelected}"
         @click="markActive('activity')"
       >
-        <div class="delete-icon">
-          <div class="svg-delete-process-step" v-if="this.isActivityActive" />
+        <div class="delete-icon" v-if="this.isActivityActive" @click="deleteActivity" >
+          <div class="svg-delete-process-step"/>
         </div>
         <div class="process-step-name bold" v-text="activity.name">
           Placeholder
@@ -43,9 +43,9 @@
     <!-- right side informations -->
     <transition name="fade">
         <div class="output-informations noselect flex-row center-hor"  v-if="this.isActivityClicked" @click="markActive('output-data')">
-                <div class="connecting-to-center-line-hor"></div>
-                <div class="circle circle-left" v-bind:class="{outputDataSelected: isOutputDataSelected}"></div>
-            <div class="output-data bold" v-bind:class="{outputDataMarkLine: isOutputDataSelected}">Entstehende Daten</div>
+            <div class="connecting-to-center-line-hor" v-bind:class="{outputDataMarkLine: isOutputDataSelected}"></div>
+            <div class="circle circle-left" v-bind:class="{outputDataSelected: isOutputDataSelected}"></div>
+            <div class="output-data bold">Entstehende Daten</div>
         </div>
     </transition>
     
@@ -124,6 +124,9 @@ export default {
                 console.warn("no such type defined");
                 break;
         }
+    },
+    deleteActivity(){
+        this.$emit("delete", this.activity.id)
     }
   }
 };
@@ -169,6 +172,7 @@ export default {
     width: 20vw;
     height: 20vh;
     border: 3px solid black;
+    background-color: white;
     border-radius: 15px;
     max-height: 100px;
     max-width: 250px;
@@ -192,6 +196,7 @@ export default {
     width: 4vh;
     border-radius: 100%;
     border: 1px solid black;
+    background-color: white;
 }
 
 .circle-right {
@@ -250,7 +255,9 @@ export default {
 .next-process-step {
     max-height: 50px;
     max-width: 250px;
+    place-self: flex-end;
     width: auto;
+    margin-right: 1vw;
 }
 
 .svg-delete-process-step {

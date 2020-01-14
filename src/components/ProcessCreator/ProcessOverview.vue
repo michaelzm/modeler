@@ -5,11 +5,11 @@
                  zur Übersicht
             </div>
         </div>
-        <div class="process-editor">
+        <div class="process-editor checkered">
          
             <div class="flex-column center-hor">
-                <FinishedProcessStep v-for="(item, index) in activities" :activity="item" :key="index" @open-navbar="openSidebar" @show-nextstep="showNextStep"/>
-                <ConnectingBlock v-for="(item, index) in connectingBlocks" :blockData="item" :key="'CB'+index"/>
+                <FinishedProcessStep v-for="(item, index) in vuexActivities" :activity="item" :key="index" @open-navbar="openSidebar" @show-nextstep="showNextStep" @delete="deleteActivity"/>
+                <ConnectingBlock v-for="(item, index) in connectingBlocks" :blockData="item" :key="'CB'+index" @create-new-activity="createNewActivity"/>
             </div>
             <!-- dont show if process activity is open -->
             <div class="next-step-dialog" v-if="displayNextStep && !isStepInformationVisible">
@@ -29,9 +29,6 @@ export default {
         return {
             displayNextStep: false,
             isStepInformationVisible: false,
-            activities: [
-                {name:'Ware angekommen', id:'28241628', input_data:['Auftragsliste'], input_it: [], output_data:['Lieferantenbestätigung']}, 
-            ],
             connectingBlocks : [],
 
         }
@@ -40,6 +37,11 @@ export default {
         FinishedProcessStep,
         NextStepDialog,
         ConnectingBlock
+    },
+    computed: {
+      vuexActivities (){
+        return this.$store.state.activitiesModule.activities
+      }
     },
     methods: {
         openSidebar (data) {
@@ -72,18 +74,42 @@ export default {
         createConnectingBlock(block) {
             this.connectingBlocks.push(block)
         },
+        deleteActivity(id){
+            for(var i = 0; i < this.activities.length; i++){
+                if(this.activities[i].id === id){
+                    this.activities.splice(i, 1);
+                    break;
+                }
+            }
+        },
+        createNewActivity() {
+            this.$emit("create-new-activity")
+        },
     }
 }
 </script>
 
 <style lang="scss">
+    .process-overview {
+        height: 100vh;
+    }
 
     .top-menu-bar {
       height: 3vh;
+      width: 100vw;
+      z-index: 101;
+      background-color: white;
       min-height: 40px;
-      border-bottom: 1px solid black;
+      position: fixed;
+      box-shadow: 0 4px 2px -2px rgba(0,0,0,0.2);
       .menu-back-to-overview {
           margin-left: 20px;
       }
+      
+    }
+
+    .process-editor {
+        padding-top: 7vh;
+        height: 100%;
     }
 </style>

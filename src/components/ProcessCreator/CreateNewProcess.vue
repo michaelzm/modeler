@@ -2,7 +2,7 @@
     <div class="create-new-process">
         <div class="top-part flex-column center-hor">
             <div class="header">
-                <h3>Neuer Prozess</h3>
+                <h3>Neuen Prozess erstellen</h3>
             </div>
             <div class="new-process-illustration">
                 <div class="svg-process-image"></div>
@@ -37,7 +37,11 @@
 
 <script>
 export default {
-    name: "CreateNewProcess"
+    name: "CreateNewProcess",
+    computed: {
+    },
+    methods: {
+    }
 }
 </script>
 
@@ -101,7 +105,7 @@ export default {
     }
 
     .menu-go-next {
-        position: relative;
+        position: absolute;
         bottom: 4vh;
         right: 4vh;
     }
