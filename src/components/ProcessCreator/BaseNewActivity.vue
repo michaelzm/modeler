@@ -5,17 +5,17 @@
             <div class="line"></div>
             <div class="current-position-indicator flex-row space-between">
                 <div class="step flex-column center-hor">
-                    <div class="circle circle-1"/>
+                    <div class="circle" v-bind:class="{circle_1: circleActive(1)}"/>
                     <div class="step-title">Allgemeine Informationen</div>
                 </div>
 
                 <div class="step flex-column center-hor">
-                    <div class="circle circle-2"/>
+                    <div class="circle" v-bind:class="{circle_2: circleActive(2)}"/>
                     <div class="step-title">Benötigter Input</div>
                 </div>
 
                 <div class="step flex-column center-hor">
-                    <div class="circle circle-3"/>
+                    <div class="circle" v-bind:class="{circle_3: circleActive(3)}"/>
                     <div class="step-title">Ergebnis des Prozessschrittes</div>
                 </div>
 
@@ -24,14 +24,28 @@
         </div>
         <div class="current-step-informations">
             <!-- component changes in here -->
-            <OutputInformationsStep/>>
+            <div class="general-informations" v-if="inputStep===1">
+                <GeneralInformationsStep/>
+            </div>
+            <div class="input-informations" v-if="inputStep===2">
+                <InputInformationsStep/>
+            </div>
+            <div class="output-informations" v-if="inputStep===3">
+                <OutputInformationsStep/>
+            </div>
         </div>
         <div class="menu-bottom flex-row space-between">
-            <div class="button-go-prev">
+            <div class="button-cancel" v-if="inputStep === 1">
+                abbrechen
+            </div>
+            <div class="button-go-prev" @click="prevStep" v-if="inputStep > 1">
                 zurück
             </div>
-            <div class="button-go-next">
+            <div class="button-go-next" @click="nextStep" v-if="inputStep < 3">
                 weiter
+            </div>
+            <div class="button-finish" @click="finishActivity" v-if="inputStep === 3">
+                Aktivität erstellen
             </div>
         </div>
     </div>
@@ -51,12 +65,42 @@ export default {
     },
     data () {
         return {
-            circle: 1,
+            inputStep: 1,
+            generalInformations: {
+                name: '',
+                description: '',
+                comment: '',
+                department:'',
+                employee: '',
+            },
+            inputInformations: {
+                requiredData: [],
+                requiredIt: [],
+            },
+            outputInformations: {
+                createdData: [],
+            }
+            
         }
     },
     methods: {
         nextStep() {
+            this.inputStep++;
             //when moving to the next step, move the colored circle by one
+        },
+        prevStep() {
+            this.inputStep--;
+            //when moving to the next step, move the colored circle by one
+        },
+        circleActive(idx){
+            if(idx === this.inputStep){
+                return true;
+            } else {
+                return false;
+            }
+        },
+        finishActivity() {
+            this.$emit("finish-activity")
         }
     }
 }
@@ -94,8 +138,16 @@ export default {
         background-color: white;
     }
 
-    .circle-1 {
+    .circle_1 {
         background-color: red;
+    }
+
+    .circle_2 {
+        background-color: rgb(29, 255, 8);
+    }
+
+    .circle_3 {
+        background-color: rgb(24, 28, 250);
     }
 
     .line {
@@ -111,9 +163,12 @@ export default {
         bottom: 0;
         position: fixed;
 
+        .button-cancel,
         .button-go-prev{
             margin-left: 3vw;
         }
+
+        .button-finish,
         .button-go-next {
             margin-right: 3vw;
         }

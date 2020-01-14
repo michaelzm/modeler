@@ -24,6 +24,18 @@ export default {
     .new-step-input-informations {
         margin: 5vh 1vw 0 1vw;
     }
+
+    .input-data {
+        width: 100%;
+    }
+
+    .required-it {
+        width: 100%;
+    }
+
+    .description-text {
+        width: 100%;
+    }
     
     .required-it{
         margin-top: 30vh;

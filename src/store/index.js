@@ -17,13 +17,13 @@ const activitiesModule = {
   },
   getters: {},
   mutations: {
-    countByOne(state){
-      state.aCount ++
+    addActivityMutation(state, payload){
+      state.activities.push(payload.activity)
     }
   },
   actions: {
-    increaseA({commit}){
-        commit("countByOne")
+    addActivityAction({commit}, payload){
+        commit("addActivityMutation", payload)
     }
   }
 }
