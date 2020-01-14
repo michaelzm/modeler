@@ -4,13 +4,15 @@
     <!-- left side informations -->
     <transition name="fade">
         <div class="input-informations flex-column " v-if="this.isActivityClicked">
-            <div class="input-data-container flex-row"  @click="markActive('input-data')" >
+            <div class="input-data-container flex-row center-hor"  @click="markActive('input-data')" >
                 <div class="input-data noselect bold">Benötigte Dokumente</div>
                 <div class="circle circle-right" v-bind:class="{inputDataSelected: isInputDataSelected}"></div>
+                <div class="connecting-to-center-line-hor" v-bind:class="{inputDataMarkLine: isInputDataSelected}"></div>
             </div>
-            <div class="input-it-container flex-row" @click="markActive('input-it')" >
+            <div class="input-it-container flex-row center-hor" @click="markActive('input-it')" >
                 <div class="input-it noselect bold">Verwendete Software / IT</div>
                 <div class="circle circle-right" v-bind:class="{inputItSelected: isInputItSelected}"></div>
+                <div class="connecting-to-center-line-hor" v-bind:class="{inputItMarkLine: isInputItSelected}"></div>
             </div>
         </div>
     </transition>
@@ -31,15 +33,19 @@
       </div>
       <div class="next-process-step-container flex-row" @click="toggleNextStep" v-if="this.isActivityClicked">
         <div class="next-process-step noselect bold">Nächster Schritt</div>
-        <div class="circle circle-right"></div>
+        <div class="circle-connected flex-column center-hor">
+            <div class="connecting-to-center-line-ver"></div>
+            <div class="circle circle-right"></div>
+        </div>
       </div>
     </div>
     
     <!-- right side informations -->
     <transition name="fade">
-        <div class="output-informations noselect flex-row"  v-if="this.isActivityClicked" @click="markActive('output-data')">
-            <div class="circle circle-left" v-bind:class="{outputDataSelected: isOutputDataSelected}"></div>
-            <div class="output-data bold">Entstehende Daten</div>
+        <div class="output-informations noselect flex-row center-hor"  v-if="this.isActivityClicked" @click="markActive('output-data')">
+                <div class="connecting-to-center-line-hor"></div>
+                <div class="circle circle-left" v-bind:class="{outputDataSelected: isOutputDataSelected}"></div>
+            <div class="output-data bold" v-bind:class="{outputDataMarkLine: isOutputDataSelected}">Entstehende Daten</div>
         </div>
     </transition>
     
@@ -130,14 +136,30 @@ export default {
 }
 
 .input-informations {
-    margin-right: 3vh;
+/*     margin-right: 3vh; */
     width: 30vw;
 }
 
 .output-informations {
-    margin-left: 3vh;
+   /*  margin-left: 3vh; */
     width: 30vw;
     height: fit-content;
+}
+
+.connecting-to-center-line-hor {
+    width: 3vh;
+    height: 1px;
+    border-top: 2px dashed black;
+}
+
+.connecting-to-center-line-ver {
+    width: 1px;
+    height: 3vh;
+    border-left: 2px dashed black;
+}
+
+.cirlce-connected {
+    height: 6vh;
 }
 
 .center-informations{
@@ -173,11 +195,11 @@ export default {
 }
 
 .circle-right {
-    margin-left: 2vh;
+
 }
 
 .circle-left {
-    margin-right: 2vh;
+
 }
 
 
@@ -187,14 +209,26 @@ export default {
   transition: border-color 0.5s;
 }
 
+.inputDataMarkLine {
+    border-color: red;
+}
+
 .inputDataSelected {
     background-color: red;
     transition: background-color 0.5s;
 }
 
+.inputItMarkLine {
+    border-color: pink;
+}
+
 .inputItSelected {
-    background-color: yellow; 
+    background-color: pink;
     transition: background-color 0.5s;
+}
+
+.outputDataMarkLine {
+    border-color: #00FF14;
 }
 
 .outputDataSelected {
@@ -210,7 +244,6 @@ export default {
 
 
 .next-process-step-container {
-    margin-top: 3vh;
     width: fit-content;
 }
 
@@ -240,12 +273,13 @@ export default {
 .input-data {
     max-height: 50px;
     max-width: 250px;
+    margin-right: 1vw;
     width: auto;
     height: 10vh;
 }
 
 .input-it {
-
+    margin-right: 1vw;
     max-height: 50px;
     max-width: 250px;   
     width: auto;
@@ -253,6 +287,7 @@ export default {
 }
 
 .output-data {
+    margin-left: 1vw;
     max-height: 50px;
     max-width: 250px;
     width: auto;

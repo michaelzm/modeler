@@ -1,9 +1,11 @@
 <template>
     <div class="next-step-dialog flex-column center-hor">
         <!-- no choice clicked -->
+        <transition name="fade">
             <div class="first-level-choices">
                 <NextStepDialogChoice v-for="(item, index) in computeChoice()" :choiceData="item" :key="index" @choice="setNextStepType"></NextStepDialogChoice>
             </div>
+        </transition>
         <!-- end of options -->
     </div>
 </template>

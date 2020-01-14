@@ -43,7 +43,7 @@ import InputInformationsStep from './ActivityCreationSteps/InputInformationsStep
 import OutputInformationsStep from './ActivityCreationSteps/OutputInformationsStep'
 
 export default {
-    name: "BaseNewProcessStep",
+    name: "BaseNewActivity",
     components: {
         GeneralInformationsStep,
         InputInformationsStep,
