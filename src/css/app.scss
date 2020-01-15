@@ -65,6 +65,11 @@ body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
 }
+
+//prevennt hightlight behavior in chrome
+*:focus {
+    outline: none;
+}
   
 body {
     width: 100%;

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class = "noselect">
       <ProcessOverview v-if="displayProcessOverview" @create-new-activity="goTo"/>
       <CreateNewProcess v-if="displayCreateNewProcess" @finish-process="saveProcess"/>
       <BaseNewActivity v-if="displayCreateNewActivity" @finish-activity="saveActivity"/>

@@ -9,6 +9,7 @@
         <div class="process-editor checkered">
          
             <div class="flex-column center-hor">
+                <!-- process always starts with processStart block -->
                 <ProcessStart/>
                 <FinishedProcessStep v-for="(item, index) in vuexActivities" :activity="item" :key="index" @open-navbar="openSidebar" @show-nextstep="showNextStep" @delete="deleteActivity"/>
                 <ConnectingBlock v-for="(item, index) in connectingBlocks" :blockData="item" :key="'CB'+index" @create-new-activity="createNewActivity"/>

@@ -11,7 +11,7 @@
         </div>
         <div class="process-general-information flex-column center-hor">
             <div class="process-title flex-row space-between">
-                <div class="input-indicator">Titel</div>
+                <div class="input-indicator">Prozessname</div>
                 <input v-model="form.processTitle" class="input-title" type="text" placeholder="Warenanlieferung"></input>
             </div>
             <div class="process-description flex-row space-between">
@@ -20,7 +20,7 @@
             </div>
              <div class="process-start flex-row space-between">
                 <div class="input-indicator">Welches Ereignis startet den Prozess?</div>
-                <input v-model="form.processStart" class="input-start" type="text" placeholder="Anlieferung einer Ware.., Eingehen einer Retoure"></input>
+                <input v-model="form.processStart" class="input-start" type="text" placeholder="Anlieferung einer Ware, Feedback eines Kunden"></input>
             </div>
             <div class="process-category flex-row space-between">
                 <div class="input-indicator">Kategorie</div>
@@ -74,6 +74,10 @@ export default {
 </script>s
 
 <style lang="scss" scoped>
+    textarea,
+    input {
+        padding-left: 2vw;
+    }
     .divider {
         width: 80vw;
         border-bottom: 1px solid black;

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="17" viewBox="0 0 96 17">
+  <g id="Gruppe_33" data-name="Gruppe 33" transform="translate(-368 -359.5)">
+    <g id="Ellipse_9" data-name="Ellipse 9" transform="translate(368 360)" fill="none" stroke="#707070" stroke-width="2">
+      <circle cx="8" cy="8" r="8" stroke="none"/>
+      <circle cx="8" cy="8" r="7" fill="none"/>
+    </g>
+    <path id="Pfad_47" data-name="Pfad 47" d="M382,367" fill="none" stroke="#707070" stroke-width="1"/>
+    <g id="Pfad_49" data-name="Pfad 49" transform="translate(448 360)" fill="none">
+      <path d="M8,0A8,8,0,1,1,0,8,8,8,0,0,1,8,0Z" stroke="none"/>
+      <path d="M 8 1 C 4.140190124511719 1 1 4.140190124511719 1 8 C 1 11.85980987548828 4.140190124511719 15 8 15 C 11.85980987548828 15 15 11.85980987548828 15 8 C 15 4.140190124511719 11.85980987548828 1 8 1 M 8 0 C 12.41827964782715 0 16 3.581720352172852 16 8 C 16 12.41827964782715 12.41827964782715 16 8 16 C 3.581720352172852 16 0 12.41827964782715 0 8 C 0 3.581720352172852 3.581720352172852 0 8 0 Z" stroke="none" fill="#707070"/>
+    </g>
+    <g id="Ellipse_12" data-name="Ellipse 12" transform="translate(450 362)" fill="none" stroke="#707070" stroke-width="1">
+      <circle cx="6" cy="6" r="6" stroke="none"/>
+      <circle cx="6" cy="6" r="5.5" fill="none"/>
+    </g>
+    <path id="Pfad_48" data-name="Pfad 48" d="M404.506,360v16H433V360Z" transform="translate(-2.506)" fill="#707070" stroke="#707070" stroke-width="1"/>
+    <line id="Linie_38" data-name="Linie 38" x2="18" transform="translate(384 368)" fill="none" stroke="#707070" stroke-width="1"/>
+    <line id="Linie_39" data-name="Linie 39" x1="4" y1="4" transform="translate(398 364)" fill="none" stroke="#707070" stroke-width="1"/>
+    <line id="Linie_40" data-name="Linie 40" x1="4" y2="4" transform="translate(398 368)" fill="none" stroke="#707070" stroke-width="1"/>
+    <line id="Linie_41" data-name="Linie 41" x2="18" transform="translate(430 368)" fill="none" stroke="#707070" stroke-width="1"/>
+    <line id="Linie_42" data-name="Linie 42" x1="4" y1="4" transform="translate(444 364)" fill="none" stroke="#707070" stroke-width="1"/>
+    <line id="Linie_43" data-name="Linie 43" x1="4" y2="4" transform="translate(444 368)" fill="none" stroke="#707070" stroke-width="1"/>
+  </g>
+</svg>

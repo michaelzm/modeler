@@ -1,7 +1,7 @@
 <template>
-  <div class="function-card" @click="goToFunction" v-bind:class="{checkered: isProcessCreateFunction}">
+  <div class="function-card" @click="goToFunction" v-bind:class="{checkered: isProcessCreateFunction, hoverColor:  hover}" @mouseover="hoverActive" @mouseleave="hoverInactive">
     <div class="function-title" v-text="this.data.title">Process Creator</div>
-    <div class="function-icon" v-bind:class="{pyramide: isBusinessExploreFunction, editIcon: isProcessEditFunction}"></div>
+    <div class="function-icon" v-bind:class="{pyramide: isBusinessExploreFunction, editIcon: isProcessEditFunction, creator: isProcessCreateFunction}"></div>
     <div class="function-description" v-text="this.data.description">
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ad nostrum soluta eum, vitae dolorum blanditiis 
       quas deserunt, quidem, repellat animi distinctio? Deserunt sit hic facilis, sapiente mollitia vel tempore.
@@ -13,10 +13,21 @@
 export default {
   name: "FunctionOverviewComponent",
   props: ['data'],
+  data() {
+    return {
+      hover: false,
+    }
+  },
   methods: {
       goToFunction() {
           this.$emit("open-function", this.data.id);
       },
+      hoverActive() {
+        this.$emit("hover-active")
+      },
+      hoverInactive() {
+        this.$emit("hover-inactive")
+      }
   },
   computed: {
       isProcessCreateFunction() {
@@ -54,12 +65,26 @@ export default {
     background-size: 100% 100%;
 }
 
+.creator{
+    background-image: url(./assets/creator_icon.svg);
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 80%;
+    background-size: 100% 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .function-card {
-  height: 60vh;
+  height: 50vh;
   width: 30vw;
   max-width: 400px;
   border: 1px solid rgb(238, 238, 238);
+  background-color: transparent;
   border-radius: 18px;
+  transform: translate(0, 0px);
+  box-shadow: 0 0 0 white;
+  transition: transform 0.55s, background-color 1.2s, box-shadow 1s;
 }
 
 .function-title {
@@ -76,7 +101,7 @@ export default {
 }
 .function-description {
     height:max-content;
-    font-size: 16px;
+    font-size: 18px;
     margin-top: 5vh;
     padding-left: 2vw;
     padding-right: 2vw;
@@ -88,7 +113,10 @@ export default {
     -ms-transform: translate(-2px, -2px);
     -o-transform: translate(-2px, -2px);
     -webkit-transform: translate(-2px, -2px);
+    background-color:rgba(random(255), random(255), random(255), 0.2);
     transform: translate(0, -5px);
-    transition: transform 0.3s;
+    transition: background-color 1.5s, transform 0.7s, box-shadow 1s;
+
+   
 }
 </style>
