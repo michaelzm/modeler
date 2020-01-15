@@ -59,6 +59,9 @@ export default {
 
     .functions {
         margin-top: 10vh;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
     }
 
     .smart-modeler-overview{

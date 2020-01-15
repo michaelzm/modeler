@@ -76,7 +76,9 @@ export default {
 }
 
 .function-card {
-  height: 50vh;
+  margin: 0 5px 0 5px;
+  height: 70vh;
+  max-height: 600px;
   width: 30vw;
   max-width: 400px;
   border: 1px solid rgb(238, 238, 238);
@@ -98,6 +100,7 @@ export default {
     margin-top: 5vh;
     text-align: center;
     height: 10vh;
+    max-height: 70px;
 }
 .function-description {
     height:max-content;

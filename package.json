@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "dev": "NODE_ENV=DEV vue-cli-service serve & sleep 5 && NODE_ENV=DEV electron app.js"
   },
   "dependencies": {
     "core-js": "^3.4.4",
+    "electron": "^7.1.9",
     "register-service-worker": "^1.6.2",
     "uuid": "^3.3.3",
     "vue": "^2.6.10",
