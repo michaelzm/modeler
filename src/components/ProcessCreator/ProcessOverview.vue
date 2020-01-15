@@ -9,6 +9,7 @@
         <div class="process-editor checkered">
          
             <div class="flex-column center-hor">
+                <ProcessStart/>
                 <FinishedProcessStep v-for="(item, index) in vuexActivities" :activity="item" :key="index" @open-navbar="openSidebar" @show-nextstep="showNextStep" @delete="deleteActivity"/>
                 <ConnectingBlock v-for="(item, index) in connectingBlocks" :blockData="item" :key="'CB'+index" @create-new-activity="createNewActivity"/>
             </div>
@@ -25,8 +26,17 @@ import Sidebar from './EditorElements/Sidebar';
 import FinishedProcessStep from './ProcessElements/FinishedProcessStep';
 import NextStepDialog from './ProcessElements/NextStepDialog';
 import ConnectingBlock from './ProcessElements/ConnectingBlock';
+import ProcessStart from './ProcessElements/ProcessStart';
+
 export default {
     name: 'ProcessOverview',
+    components: {
+        FinishedProcessStep,
+        NextStepDialog,
+        ConnectingBlock,
+        Sidebar,
+        ProcessStart
+    },
     data() {
         return {
             displayNextStep: false,
@@ -35,15 +45,9 @@ export default {
 
         }
     },
-    components: {
-        FinishedProcessStep,
-        NextStepDialog,
-        ConnectingBlock,
-        Sidebar
-    },
     computed: {
       vuexActivities (){
-        return this.$store.state.activitiesModule.process.activities
+        return this.$store.state.activities.process.activities
       }
     },
     methods: {
@@ -81,12 +85,12 @@ export default {
             this.connectingBlocks.push(block)
         },
         deleteActivity(id){
-            for(var i = 0; i < this.activities.length; i++){
+          /*   for(var i = 0; i < this.activities.length; i++){
                 if(this.activities[i].id === id){
                     this.activities.splice(i, 1);
                     break;
                 }
-            }
+            } */
         },
         createNewActivity() {
             this.$emit("create-new-activity", "createActivity")

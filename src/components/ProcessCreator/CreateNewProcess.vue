@@ -12,43 +12,68 @@
         <div class="process-general-information flex-column center-hor">
             <div class="process-title flex-row space-between">
                 <div class="input-indicator">Titel</div>
-                <div class="input-title">
-                
-                </div>
+                <input v-model="form.processTitle" class="input-title" type="text" placeholder="Warenanlieferung"></input>
             </div>
             <div class="process-description flex-row space-between">
                 <div class="input-indicator">Beschreibung</div>
-                <div class="input-description">
-
-                </div>
+                <textarea v-model="form.processDescription" class="input-description" type="text" placeholder="Bei diesem Prozess.."></textarea>
+            </div>
+             <div class="process-start flex-row space-between">
+                <div class="input-indicator">Welches Ereignis startet den Prozess?</div>
+                <input v-model="form.processStart" class="input-start" type="text" placeholder="Anlieferung einer Ware.., Eingehen einer Retoure"></input>
             </div>
             <div class="process-category flex-row space-between">
                 <div class="input-indicator">Kategorie</div>
-                <div class="input-category">
-
-                </div>
+               <input v-model="form.processCategory" class="input-category" type="text" placeholder="Kategorie"></input>
             </div>
         </div>
-        <div class="menu-go-next" @click="finishProcessCreation">
+        <div class="menu-go-next" @click="finishProcessCreation" v-if="allInputsFilled">
             weiter >
         </div>
     </div>
 </template>
 
 <script>
+import uuid from 'uuid';
 export default {
     name: "CreateNewProcess",
+    data() {
+        return {
+            form : {
+                id: uuid.v4(),
+                processTitle: '',
+                processDescription: '',
+                processCategory: '',
+                processStart: '',
+            }
+        }
+    },
     computed: {
+        allInputsFilled() {
+            if(this.form.processTitle !== "" && this.form.processDescription !== "" && this.form.processStart !== "" && this.form.processCategory !==""){
+                return true;
+            } else return false;
+        }
     },
     methods: {
         finishProcessCreation() {
+            let process = {
+                id: this.form.id,
+                title: this.form.processTitle,
+                description: this.form.processDescription,
+                category: this.form.processCategory,
+                start: this.form.processStart,
+            };
+
+            this.$store.dispatch('addProcessAction', {process})
+            this.$store.dispatch('setProcessActiveAction', {id: this.form.id})
             this.$emit("finish-process")
         }
     }
 }
-</script>
+</script>s
 
-<style lang="scss">
+<style lang="scss" scoped>
     .divider {
         width: 80vw;
         border-bottom: 1px solid black;
@@ -77,6 +102,7 @@ export default {
             height: 5vh;
             width: 35vw;
             background-color: #F8F8F8;
+            font-size: 20px;
         }
     }
 
@@ -90,6 +116,21 @@ export default {
             height: 20vh;
             width: 35vw;
             background-color: #F8F8F8;
+            font-size: 18px;
+        }
+    }
+
+    .process-start {
+        margin-top: 5vh;
+        width: 50vw;
+
+            .input-start {
+            border: 1px solid black;
+            border-radius: 20px;
+            height: 5vh;
+            width: 35vw;
+            background-color: #F8F8F8;
+            font-size: 18px;
         }
     }
 
@@ -104,6 +145,7 @@ export default {
             height: 5vh;
             width: 35vw;
             background-color: #F8F8F8;
+            font-size: 20px;
         }
     }
 
@@ -111,6 +153,10 @@ export default {
         position: absolute;
         bottom: 4vh;
         right: 4vh;
+    }
+
+    .input-indicator {
+        width: 10vw;
     }
     
 </style>

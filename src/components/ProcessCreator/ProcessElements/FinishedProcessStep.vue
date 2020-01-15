@@ -169,9 +169,6 @@ export default {
     height: 6vh;
 }
 
-.center-informations{
-}
-
 .process-step {
     width: 20vw;
     height: 20vh;
@@ -196,21 +193,12 @@ export default {
 }
 
 .circle {
-    height: 4vh;
-    width: 4vh;
+    height: 3vh;
+    width: 3vh;
     border-radius: 100%;
     border: 1px solid black;
     background-color: white;
 }
-
-.circle-right {
-
-}
-
-.circle-left {
-
-}
-
 
 .selected {
   border-color: red;

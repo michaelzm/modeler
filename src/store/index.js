@@ -3,17 +3,68 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-//save activity related stuff
+
+const overviewModule = {
+  state: {
+    activeProcessId: '',
+  },
+  getters: {},
+  mutations: {
+    setProcessActiveMutation(state, payload){
+      state.activeProcessId = payload.id
+    },
+  },
+  actions: {
+    setProcessActiveAction({commit}, payload){
+      commit("setProcessActiveMutation", payload)
+    },
+  }
+}
+
+
+/**
+ * PROCESS STORE 
+ */
+
+ /** PROCESS SCHEME
+  * {
+      id: '',
+      title: '',
+      descirption: '',
+      category: '',
+      activities: [],
+      start: '',
+    },
+  * 
+  */
+
+const processModule = {
+  state: {
+    processList: []
+  },
+  getters: {},
+  mutations: {
+    addProcessMutation(state, payload){
+      state.processList.push(payload.process)
+    },
+  },
+  actions: {
+    addProcessAction({commit}, payload){
+      commit("addProcessMutation", payload)
+    },
+  }
+}
 
 /**
  * ACTIVITIES STORE
+ * 
+ * ACTIVITY SCHEME
+ * {name:'Ware angekommen', id:'28241628', input_data:['Auftragsliste'], input_it: [], output_data:['Lieferantenbestätigung']}, 
  */
 const activitiesModule = {
   state: {
     process: {
-      activities: [
-        {name:'Ware angekommen', id:'28241628', input_data:['Auftragsliste'], input_it: [], output_data:['Lieferantenbestätigung']}, 
-      ],
+      activities: [],
       name: 'Warenanlieferung',
       descirption: 'Dieser Prozess beschreibt die Handhabung von Materiallieferungen',
       category:'Logistik',
@@ -53,6 +104,8 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    activitiesModule: activitiesModule,
+    activities: activitiesModule,
+    process: processModule,
+    overview: overviewModule,
   }
 })
