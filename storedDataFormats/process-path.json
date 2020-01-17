@@ -1,0 +1,14 @@
+{
+    "processPath": {
+        "pathId": "1",
+        "startAfterElementId": "18263103",
+        "endInElementId": "1726152",
+        "pathElements": [
+            {"activityId": "12", "connectingBlockId": "5"},
+            {"activityId": "1923", "connectingBlockId": "11"},
+            {"activityId": "169"},
+            {"activityId": "1172", "connectingBlockId": "1371"},
+            {"activityId": "10381"}
+        ]
+    }
+}

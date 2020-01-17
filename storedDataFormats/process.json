@@ -1,0 +1,16 @@
+{ 
+    "process": {
+        "id": "145816261",
+        "commonData": {
+            "title": "Auftragsabwicklung",
+            "description": "Dieser Prozess beschreibt die logistischen Abläufte, die bei einem Auftrag anfallen",
+            "category": "Logistik"
+        },
+        "start": "Auftrag geht ein",
+        "end": "Ware verlässt das Lager",
+        "proessPathList": [
+            {"pathId": "1"}, 
+            {"pathId": "5"}
+        ]
+    }
+} 

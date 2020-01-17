@@ -1,0 +1,13 @@
+ {
+    "name": "Ware angekommen",
+    "activityId": 28241628, 
+    "input_data":[{
+        "input_data_name":"Auftragsliste", 
+        "input_data_description": "Diese Liste beinhaltet .."
+    }],
+    "input_it": [{"input_it_name":"SAP Simple Finance"}],
+    "output_data":[{
+        "output_data_name": "Lieferantenbestätigung",
+        "output_data_description": "Diese Bestätigung umfasst mehrere Aspekte, mit denen..."
+    }]
+}

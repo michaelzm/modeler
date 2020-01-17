@@ -3,6 +3,138 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+//contains all the paths
+const processPathModule = {
+  state: {
+    processPaths: [
+      {
+        pathId: 124,
+        //
+        startAfterElementId: 1231,
+        //
+        endInElementId: 1231231,
+        //
+        pathElements: [
+          { activityId: 1, connectingBlockId: 1},
+          { activityId: 2, connectingBlockId: 2},
+        ]
+      }
+    ]
+  },
+  mutations: {
+    addProcessPathMutation(state, payload) {
+      state.processPaths.push(payload.processPath)
+    }
+  },
+  actions: {
+    addProcessPathAction({ commit }, payload) {
+      commit("addProcessPathMutation", payload)
+    }
+  }
+
+}
+
+const connectingBlockModule = {
+  state: {
+    connectingBlocks: [{
+      //
+      id: 131231,
+      //
+      inputActivityIds: [1],
+      //
+      outputPathIds: [1, 2],
+      //
+      type: "time",
+      //
+      value: "5 Tage",
+      //
+      text: "Der Prozess läuft in 5 Tagen weiter"
+    }]
+  }
+}
+
+const activityModule = {
+  state: {
+    activities: [{
+      name: "Ware angekommen",
+      //
+      activityId: 1,
+      //
+      input_data: [{
+        name: "Auftragsliste",
+        description: "Diese Liste beinhaltet",
+      }],
+      //
+      input_it: [{
+        name: "SAP Simple Finance"
+      }],
+      //
+      output_data: [{
+        name: "Lieferantenbestätigung",
+        description: "Diese Bestätigung umfasst.."
+      }]
+    },
+    {
+      name: "Ware weiterverarbeiten",
+      //
+      activityId: 2,
+      //
+      input_data: [{
+        name: "Warenliste",
+        description: "Diese Liste beinhaltet..",
+      }],
+      //
+      input_it: [],
+      //
+      output_data: []
+    }]
+  },
+  mutations: {
+    addActivityMutation(state, payload) {
+      state.activities.push(payload.activity)
+    }
+  },
+  actions: {
+    addActivityAction({ commit }, payload) {
+      commit("addActivityMutation", payload)
+    }
+  }
+}
+
+const processModule = {
+  state: {
+    processList: [{
+      //
+      id: 1231,
+      //
+      commonData: {
+        title: "Auftragsabwicklung",
+        description: "Dieser Prozess beschreibt die ..",
+        category: "Logistik"
+      },
+      //
+      startElement: {
+        id: 10, name: "Auftrag geht ein"
+      },
+      //
+      endElement: {
+        id: 20, name: "Ware verlässt das Lager"
+      },
+      //
+      processPathList: [124]
+    }]
+  },
+  mutations: {
+    addProcessMutation(state, payload) {
+      state.processList.push(payload.newProcess)
+    }
+  },
+  actions: {
+    addProcessAction({ commit }, payload) {
+      commit("addProcessMutation", payload)
+    }
+  }
+}
 
 const overviewModule = {
   state: {
@@ -22,38 +154,6 @@ const overviewModule = {
 }
 
 
-/**
- * PROCESS STORE 
- */
-
- /** PROCESS SCHEME
-  * {
-      id: '',
-      title: '',
-      descirption: '',
-      category: '',
-      activities: [],
-      start: '',
-    },
-  * 
-  */
-
-const processModule = {
-  state: {
-    processList: []
-  },
-  getters: {},
-  mutations: {
-    addProcessMutation(state, payload){
-      state.processList.push(payload.process)
-    },
-  },
-  actions: {
-    addProcessAction({commit}, payload){
-      commit("addProcessMutation", payload)
-    },
-  }
-}
 
 /**
  * ACTIVITIES STORE
@@ -64,9 +164,11 @@ const processModule = {
 const activitiesModule = {
   state: {
     process: {
-      activities: [],
+      activities: [
+       
+      ],
       name: 'Warenanlieferung',
-      descirption: 'Dieser Prozess beschreibt die Handhabung von Materiallieferungen',
+      description: 'Dieser Prozess beschreibt die Handhabung von Materiallieferungen',
       category:'Logistik',
       id: "1231231231"
 
@@ -105,7 +207,10 @@ export default new Vuex.Store({
   },
   modules: {
     activities: activitiesModule,
-    process: processModule,
     overview: overviewModule,
+    activityStore: activityModule,
+    processStore: processModule,
+    processPathStore: processPathModule,
+    connectingBlockStore: connectingBlockModule
   }
 })

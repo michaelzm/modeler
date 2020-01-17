@@ -57,15 +57,25 @@ export default {
     },
     methods: {
         finishProcessCreation() {
-            let process = {
+            let newProcess = {
                 id: this.form.id,
-                title: this.form.processTitle,
-                description: this.form.processDescription,
-                category: this.form.processCategory,
-                start: this.form.processStart,
+                commonData: {
+                    title: this.form.processTitle,
+                    description: this.form.processDescription,
+                    category: this.form.processCategory,
+                },
+                startElement: {
+                    id: uuid.v4(),
+                    name: this.form.processStart
+                },
+                endElement: {
+                    id: uuid.v4(),
+                    name: "Ende"
+                },
+                processPathList: []
             };
 
-            this.$store.dispatch('addProcessAction', {process})
+            this.$store.dispatch('addProcessAction', {newProcess})
             this.$store.dispatch('setProcessActiveAction', {id: this.form.id})
             this.$emit("finish-process")
         }

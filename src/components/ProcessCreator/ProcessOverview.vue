@@ -8,10 +8,12 @@
         <Sidebar v-if="this.isStepInformationVisible"/>
         <div class="process-editor checkered">
          
-            <div class="flex-column center-hor">
+            <div class="flex-row center-ver">
                 <!-- process always starts with processStart block -->
-                <ProcessStart/>
-                <FinishedProcessStep v-for="(item, index) in vuexActivities" :activity="item" :key="index" @open-navbar="openSidebar" @show-nextstep="showNextStep" @delete="deleteActivity"/>
+                <div class="process-path flex-column center-hor">
+                    <ProcessStart/>
+                    <ProcessActivity v-for="(item, index) in vuexActivities" :activity="item" :key="index" @open-navbar="openSidebar" @show-nextstep="showNextStep" @delete="deleteActivity"/>
+                </div>
                 <ConnectingBlock v-for="(item, index) in connectingBlocks" :blockData="item" :key="'CB'+index" @create-new-activity="createNewActivity"/>
             </div>
             <!-- dont show if process activity is open -->
@@ -24,7 +26,7 @@
 
 <script>
 import Sidebar from './EditorElements/Sidebar';
-import FinishedProcessStep from './ProcessElements/FinishedProcessStep';
+import ProcessActivity from './ProcessElements/ProcessActivity';
 import NextStepDialog from './ProcessElements/NextStepDialog';
 import ConnectingBlock from './ProcessElements/ConnectingBlock';
 import ProcessStart from './ProcessElements/ProcessStart';
@@ -32,7 +34,7 @@ import ProcessStart from './ProcessElements/ProcessStart';
 export default {
     name: 'ProcessOverview',
     components: {
-        FinishedProcessStep,
+        ProcessActivity,
         NextStepDialog,
         ConnectingBlock,
         Sidebar,
@@ -102,7 +104,8 @@ export default {
 
 <style lang="scss" scoped>
     .process-overview {
-        height: 100vh;
+        height: 100%;
+        min-height: 100vh;
     }
 
     .top-menu-bar {
