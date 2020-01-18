@@ -5,12 +5,16 @@
             <div class="svg-connecting-arrow"></div>
         </div>
 
-        <!-- ALWAYS actual process element -->
-        <ProcessActivity/>
+        <!-- EITHER actual process element -->
+        <div class="process-activity" v-if="isActivity">
+            <ProcessActivity :activity="getActivity()"/>
+        </div>
         
-        <!--OPTIONAL next connector -->
-        <ConnectingBlock/>
-    </div class = "process-path-element">
+        <!--OR next connector -->
+        <div class="process-connecting-block" v-if="isConnectingBlock">
+            <ConnectingBlock :blockData="pathElement"/>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -24,7 +28,30 @@ export default {
 
         }
     },
-    props: ["processPathElementData"],
+    computed: {
+        isActivity() {
+            if(this.pathElement.currentProcessElement.type === "Activity"){
+                return true
+            } else {
+                return false
+            }
+        },
+        isConnectingBlock() {
+            if(this.pathElement.currentProcessElement.type === "ConnectingBlock"){
+                return true
+            } else {
+                return false
+            }
+        },
+    },
+    methods: {
+        getActivity() {
+            let id = this.pathElement.currentProcessElement.id
+            let activity = this.$store.getters.getActivityById(id)
+            return activity
+        }
+    },
+    props: ["pathElement"],
     components: {
         ProcessActivity,
     }

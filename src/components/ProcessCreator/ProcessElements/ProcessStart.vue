@@ -2,9 +2,6 @@
   <div class="process-start-block flex-column center-hor">
     <div class="start-title">{{getActiveProcessStartElement}}</div>
     <div class="start-circle"></div>
-    <!--  <div class="connection-arrow">
-            <div class="svg-connecting-arrow"></div>
-    </div>-->
   </div>
 </template>
 

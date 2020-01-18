@@ -24,7 +24,7 @@
             </div>
             <div class="process-category flex-row space-between">
                 <div class="input-indicator">Kategorie</div>
-               <input v-model="form.processCategory" class="input-category" type="text" placeholder="Kategorie"></input>
+               <input v-on:keyup.enter="finishProcessCreation" v-model="form.processCategory" class="input-category" type="text" placeholder="Kategorie"></input>
             </div>
         </div>
         <div class="menu-go-next" @click="finishProcessCreation" v-if="allInputsFilled">
@@ -45,7 +45,12 @@ export default {
                 processDescription: '',
                 processCategory: '',
                 processStart: '',
-            }
+            },
+            //we need to reuse startElementId
+            startElementId: uuid.v4(),
+            
+            //in order to link path id to process we need it globally
+            pathId: uuid.v4(),
         }
     },
     computed: {
@@ -57,6 +62,15 @@ export default {
     },
     methods: {
         finishProcessCreation() {
+            this.createNewProcess();
+            this.createNewProcessPath();
+
+            //set process Active
+            this.$store.dispatch('setProcessActiveAction', {id: this.form.id})
+
+            this.$emit("finish-process")
+        },
+        createNewProcess() {
             let newProcess = {
                 id: this.form.id,
                 commonData: {
@@ -65,19 +79,50 @@ export default {
                     category: this.form.processCategory,
                 },
                 startElement: {
-                    id: uuid.v4(),
+                    id: this.startElementId,
                     name: this.form.processStart
                 },
                 endElement: {
-                    id: uuid.v4(),
-                    name: "Ende"
+                    id: null,
+                    name: null,
                 },
-                processPathList: []
+                processPathList: [this.pathId]
             };
 
             this.$store.dispatch('addProcessAction', {newProcess})
-            this.$store.dispatch('setProcessActiveAction', {id: this.form.id})
-            this.$emit("finish-process")
+        },
+        createNewProcessPath() {
+            let processPath = {
+                id: this.pathId,
+                pathStartElement: {
+                    id: this.startElementId,
+                    name: this.form.processStart 
+                },
+                pathEndElement: {
+                    id: null,
+                    name: null
+                },
+                pathElements: [{ 
+                    prevPathElementId: '0',
+                    currentPathElementId: '1',
+                    currentProcessElement: {
+                    type: "Activity",
+                    id: '1',
+                    },
+                    nextPathElementId: '2'
+                },
+                { 
+                    prevPathElementId: '1',
+                    currentPathElementId: '2',
+                    currentProcessElement: {
+                    type: "Activity",
+                    id: '2',
+                    },
+                    nextPathElementId: 'null'
+                }]
+            }
+
+            this.$store.dispatch("addProcessPathAction", {processPath})
         }
     }
 }

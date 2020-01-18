@@ -84,6 +84,9 @@ export default {
       isNextStepActive: false
     };
   },
+  computed: {
+
+  },  
   props: ["activity"],
   methods: {
     unselectAll() {

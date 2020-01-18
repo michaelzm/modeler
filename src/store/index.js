@@ -4,24 +4,51 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 //contains all the paths
+//doubly linked list, every element knows it pre and post element 
 const processPathModule = {
   state: {
     processPaths: [
       {
-        pathId: 124,
+        id: '124',
+        // element zb start oder aufteilung
+        pathStartElement: {
+          id: "12312231",
+          name: "Start"
+        },
         //
-        startAfterElementId: 1231,
-        //
-        endInElementId: 1231231,
+        pathEndElement: {
+          id: '1231231',
+          name: "Endelement"
+        },
         //
         pathElements: [
-          { activityId: 1, connectingBlockId: 1},
-          { activityId: 2, connectingBlockId: 2},
+          { prevPathElementId: '0',
+            currentPathElementId: '1',
+            currentProcessElement: {
+              type: "Activity",
+              id: '17216-1481271-2615262',
+            },
+            nextPathElementId: '2'
+          },
+          { prevPathElementId: '1',
+            currentPathElementId: '2',
+            currentProcessElement: {
+              type: "ConnectingBlock",
+              id: '81725-16261-26192',
+            },
+            nextPathElementId: ''
+          }
         ]
       }
     ]
   },
+  getters: {
+    getProcessPathById: (state) => (id) => {
+      return state.processPaths.find(path => path.id === id)
+    }
+  },
   mutations: {
+
     addProcessPathMutation(state, payload) {
       state.processPaths.push(payload.processPath)
     }
@@ -38,11 +65,11 @@ const connectingBlockModule = {
   state: {
     connectingBlocks: [{
       //
-      id: 131231,
+      id: '131231',
       //
-      inputActivityIds: [1],
+      inputActivityIds: ['1'],
       //
-      outputPathIds: [1, 2],
+      outputPathIds: ['1', '2'],
       //
       type: "time",
       //
@@ -58,7 +85,7 @@ const activityModule = {
     activities: [{
       name: "Ware angekommen",
       //
-      activityId: 1,
+      id: '1',
       //
       input_data: [{
         name: "Auftragsliste",
@@ -77,7 +104,7 @@ const activityModule = {
     {
       name: "Ware weiterverarbeiten",
       //
-      activityId: 2,
+      id: '2',
       //
       input_data: [{
         name: "Warenliste",
@@ -88,6 +115,11 @@ const activityModule = {
       //
       output_data: []
     }]
+  },
+  getters: {
+    getActivityById: (state) => (id) => {
+      return state.activities.find(activity => activity.id === id)
+    }
   },
   mutations: {
     addActivityMutation(state, payload) {
@@ -109,7 +141,9 @@ const processModule = {
       //
       commonData: {
         title: "Auftragsabwicklung",
+        //
         description: "Dieser Prozess beschreibt die ..",
+        //
         category: "Logistik"
       },
       //
@@ -121,8 +155,13 @@ const processModule = {
         id: 20, name: "Ware verlässt das Lager"
       },
       //
-      processPathList: [124]
+      processPathList: []
     }]
+  },
+  getters: {
+    getProcessById: (state) => (id) => {
+      return state.processList.find(process => process.id === id)
+    }
   },
   mutations: {
     addProcessMutation(state, payload) {
@@ -153,64 +192,23 @@ const overviewModule = {
   }
 }
 
-
-
-/**
- * ACTIVITIES STORE
- * 
- * ACTIVITY SCHEME
- * {name:'Ware angekommen', id:'28241628', input_data:['Auftragsliste'], input_it: [], output_data:['Lieferantenbestätigung']}, 
- */
-const activitiesModule = {
-  state: {
-    process: {
-      activities: [
-       
-      ],
-      name: 'Warenanlieferung',
-      description: 'Dieser Prozess beschreibt die Handhabung von Materiallieferungen',
-      category:'Logistik',
-      id: "1231231231"
-
-    }
-  },
-  getters: {},
-  mutations: {
-    addActivityMutation(state, payload){
-      state.process.activities.push(payload.activity)
-    }
-  },
-  actions: {
-    addActivityAction({commit}, payload){
-        commit("addActivityMutation", payload)
-    }
-  }
-}
 /**
  * GENERAL STORE
  */
 export default new Vuex.Store({
   state: {
-    count: 12,
   },
   getters: {
   },
   mutations: {
-    increment(state, payload){
-      state.count += payload.amount
-    }
   },
   actions: {
-    increase({ commit }, payload){
-      commit("increment", payload)
-    }
   },
   modules: {
-    activities: activitiesModule,
     overview: overviewModule,
     activityStore: activityModule,
+    connectingBlockStore: connectingBlockModule,
     processStore: processModule,
     processPathStore: processPathModule,
-    connectingBlockStore: connectingBlockModule
   }
 })
