@@ -60,7 +60,7 @@ const processPathModule = {
   }
 
 }
-
+// connectingblock und acvitiy evtl in eigemen store zusammenfassen
 const connectingBlockModule = {
   state: {
     connectingBlocks: [{

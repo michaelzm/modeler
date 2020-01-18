@@ -1,34 +1,33 @@
 <template>
-    <div class="create-new-process">
-        <div class="top-part flex-column center-hor">
-            <div class="header">
-                <h3>Neuen Prozess erstellen</h3>
+    <div class="new-process-wrapper checkered flex-column center-ver center-hor">
+        <div class="create-new-process">
+            <div class="top-part flex-column center-hor">
+                <h3>Neuen Prozess anlegen</h3>
+                <div class="new-process-illustration">
+                    <div class="svg-process-image"></div>
+                </div>
+                <div class="divider"></div>
             </div>
-            <div class="new-process-illustration">
-                <div class="svg-process-image"></div>
-            </div>
-            <div class="divider"></div>
-        </div>
-        <div class="process-general-information flex-column center-hor">
-            <div class="process-title flex-row space-between">
-                <div class="input-indicator">Prozessname</div>
-                <input v-model="form.processTitle" class="input-title" type="text" placeholder="Warenanlieferung"></input>
-            </div>
-            <div class="process-description flex-row space-between">
-                <div class="input-indicator">Beschreibung</div>
-                <textarea v-model="form.processDescription" class="input-description" type="text" placeholder="Bei diesem Prozess.."></textarea>
-            </div>
-             <div class="process-start flex-row space-between">
-                <div class="input-indicator">Welches Ereignis startet den Prozess?</div>
-                <input v-model="form.processStart" class="input-start" type="text" placeholder="Anlieferung einer Ware, Feedback eines Kunden"></input>
-            </div>
-            <div class="process-category flex-row space-between">
-                <div class="input-indicator">Kategorie</div>
-               <input v-on:keyup.enter="finishProcessCreation" v-model="form.processCategory" class="input-category" type="text" placeholder="Kategorie"></input>
+            <div class="process-general-information flex-column center-hor">
+                <div class="process-title flex-row space-between">
+                    <div class="input-indicator">Prozessname</div>
+                    <input v-model="form.processTitle" class="input-title" type="text" placeholder="Warenanlieferung"></input>
+                </div>
+                <div class="process-description flex-row space-between">
+                    <div class="input-indicator">Beschreibung</div>
+                    <textarea v-model="form.processDescription" class="input-description" type="text" placeholder="Bei diesem Prozess.."></textarea>
+                </div>
+                <div class="process-start flex-row space-between">
+                    <div class="input-indicator">Welches Ereignis startet den Prozess?</div>
+                    <input v-model="form.processStart" class="input-start" type="text" placeholder="Anlieferung einer Ware, Feedback eines Kunden"></input>
+                </div>
+                <div class="process-category flex-row space-between">
+                    <div class="input-indicator">Kategorie</div>
+                <input v-on:keyup.enter="finishProcessCreation" v-model="form.processCategory" class="input-category" type="text" placeholder="Kategorie"></input>
+                </div>
             </div>
         </div>
         <div class="menu-go-next" @click="finishProcessCreation" v-if="allInputsFilled">
-            weiter >
         </div>
     </div>
 </template>
@@ -132,9 +131,28 @@ export default {
     textarea,
     input {
         padding-left: 2vw;
+        border-radius: 9px;
     }
+    h3 {
+        margin-top: 2vh;
+    }
+    .new-process-wrapper {
+        height: 100%;
+        min-height: 100vh;
+    }
+
+    .create-new-process {
+        background-color: white;
+        border-radius: 15px;
+        width: 80%;
+        margin-bottom: 3vh;
+        height: 90%;
+        min-height: 90vh;
+        box-shadow: 0 5px 10px rgba(154,160,185,.1), 0 15px 40px rgba(166,173,201,.2);
+    }
+
     .divider {
-        width: 80vw;
+        width: 100%;
         border-bottom: 1px solid black;
         margin-top: 5vh;
     }
@@ -156,11 +174,10 @@ export default {
         width: 50vw;
 
         .input-title {
-            border: 1px solid black;
-            border-radius: 20px;
+            border: 1px solid rgb(218, 218, 218);
+
             height: 5vh;
             width: 35vw;
-            background-color: #F8F8F8;
             font-size: 20px;
         }
     }
@@ -170,11 +187,9 @@ export default {
         width: 50vw;
 
             .input-description {
-            border: 1px solid black;
-            border-radius: 20px;
+            border: 1px solid rgb(218, 218, 218);
             height: 20vh;
             width: 35vw;
-            background-color: #F8F8F8;
             font-size: 18px;
         }
     }
@@ -184,11 +199,9 @@ export default {
         width: 50vw;
 
             .input-start {
-            border: 1px solid black;
-            border-radius: 20px;
+            border: 1px solid rgb(218, 218, 218);
             height: 5vh;
             width: 35vw;
-            background-color: #F8F8F8;
             font-size: 18px;
         }
     }
@@ -199,19 +212,22 @@ export default {
 
 
         .input-category {
-            border: 1px solid black;
-            border-radius: 20px;
+            border: 1px solid rgb(218, 218, 218);
             height: 5vh;
             width: 35vw;
-            background-color: #F8F8F8;
             font-size: 20px;
         }
     }
 
     .menu-go-next {
         position: absolute;
-        bottom: 4vh;
-        right: 4vh;
+        bottom: 3vh;
+        right: 2vh;
+        width: 6vh;
+        height: 6vh;
+        background-color: rgba(30, 238, 65, 0.658);
+        border-radius: 100%;
+        box-shadow: 0 5px 10px rgba(154,160,185,.1), 0 15px 40px rgba(166,173,201,.2);
     }
 
     .input-indicator {
