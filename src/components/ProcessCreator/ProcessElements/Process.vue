@@ -1,6 +1,10 @@
 <template>
     <div class = "process">
         <!-- always start the process with its start element which is always defined -->
+        <ProcessStart/>
+        <div class="concurrent">
+            <!-- all paths with the same start element run parallel -->
+        </div>
         <ProcessPath v-for="(item, index) in processPaths()" :pathData="item" :key="index"/>
     </div>
 </template>
@@ -48,5 +52,7 @@ export default {
 </script>
 
 <style lang="scss">
-    
+    .process {
+        padding-bottom: 50%;
+    }
 </style>

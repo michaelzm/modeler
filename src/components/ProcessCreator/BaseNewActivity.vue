@@ -1,5 +1,6 @@
 <template>
-    <div class="add-process-step">
+<div class="new-activity-container checkered flex-column center-hor center-ver">
+    <div class="add-activity flex-column">
         <div class="header flex-column center-hor">
             <h3>Prozessschritt hinzufügen </h3>
             <div class="line"></div>
@@ -35,7 +36,7 @@
             </div>
         </div>
         <div class="menu-bottom flex-row space-between">
-            <div class="button-cancel" v-if="inputStep === 1">
+            <div class="button-cancel" v-if="inputStep === 1" @click="cancel">
                 abbrechen
             </div>
             <div class="button-go-prev" @click="prevStep" v-if="inputStep > 1">
@@ -49,13 +50,14 @@
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <script>
 import GeneralInformationsStep from './ActivityCreationSteps/GeneralInformationsStep'
 import InputInformationsStep from './ActivityCreationSteps/InputInformationsStep'
 import OutputInformationsStep from './ActivityCreationSteps/OutputInformationsStep'
-
+import uuid from 'uuid'
 export default {
     name: "BaseNewActivity",
     components: {
@@ -79,7 +81,8 @@ export default {
             },
             outputInformations: {
                 createdData: [],
-            }
+            },
+            createdActivity: null,
             
         }
     },
@@ -92,6 +95,9 @@ export default {
             this.inputStep--;
             //when moving to the next step, move the colored circle by one
         },
+        cancel () {
+            this.$store.dispatch("displayProcessOverviewAction")
+        },
         circleActive(idx){
             if(idx === this.inputStep){
                 return true;
@@ -99,17 +105,58 @@ export default {
                 return false;
             }
         },
+        storeActivity() {
+            let activity = {
+                name: "Ware da",
+                id: uuid.v4(),
+                input_data: [{}],
+                input_it: [{}],
+                output_data: [{}]
+            }
+            this.$store.dispatch("addActivityAction", {activity})
+            this.createdActivity = activity;
+        },
         finishActivity() {
-            this.$emit("finish-activity")
+            this.storeActivity();
+            this.addActivityToPath();
+            this.$store.dispatch("displayProcessOverviewAction")
+        },
+        addActivityToPath() {
+            let activePathId = this.$store.state.processPathStore.activePathId
+            let addElementInformations =  {
+                processPathId: activePathId,
+                pathElement: {
+                    prevPathElementId: null,
+                    currentPathElementId: uuid.v4(),
+                    currentProcessElement: {
+                        type: "Activity",
+                        id:this.createdActivity.id
+                    },
+                    nextPathElementId: null
+                }
+            }
+
+            this.$store.dispatch("addProcessPathElementAction", addElementInformations)
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
+.new-activity-container {
+    height: 100%;
+    min-height: 100vh;
+    width: 100%;
+    min-width: 100vw;
+}
 
-.add-process-step{
-    width: 100vw;
+.add-activity{
+    width: 80vw;
+    height: 80%;
+    min-height: 80vh;
+    background-color: white;
+    box-shadow: 0 5px 10px rgba(154,160,185,.1), 0 15px 40px rgba(166,173,201,.2);
+    border-radius: 15px;
 }
     .header {
         width: 100%;
@@ -118,7 +165,7 @@ export default {
     .current-position-indicator {
         margin-top: 5vh;
         height: 10vh;
-        width: 90vw;
+        width: 70vw;
     }
 
     .step {
@@ -127,6 +174,7 @@ export default {
     }
     .step-title{
         text-align: center;
+        line-height: 1.5rem;
     }
 
     .circle {
@@ -154,14 +202,14 @@ export default {
         top: 8vh;
         position: relative;
         height: 0.5vh;
-        width: 75vw;
+        width: 50vw;
         background-color: grey;
     }
 
     .menu-bottom {
-        width: 100%;
-        bottom: 0;
-        position: fixed;
+        flex-grow: 1;
+        align-items: flex-end;
+        width: inherit;
 
         .button-cancel,
         .button-go-prev{

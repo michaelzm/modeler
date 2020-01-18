@@ -1,16 +1,13 @@
 <template>
     <div class="process-path flex-column center-hor">
         <!-- woll contain one or n process path elements-->
-        <div class="path-start">
-            <div class="global-start" >
-                <ProcessStart v-if="isGlobalStart"/>
-            </div>
-        </div>
-        <ProcessPathElement v-for="(item, index) in pathElements" :pathElement="item" :key="index"/>
+        <ProcessPathElement v-for="(item, index) in pathElements" :pathElement="item" :key="index" 
+        @update-active-process-data="updateProcessData" @store-activity-connection="createNewConnectionBlock"/>
     </div>
 </template>
 
 <script>
+import uuid from 'uuid'
 import ProcessPathElement from './ProcessPathElement'
 import ProcessStart from './ProcessStart'
 export default {
@@ -31,20 +28,60 @@ export default {
         pathStartElement() {
             return this.pathData.pathStartElement
         },
-        isGlobalStart() {
-            //get id of active process
-            let pId = this.$store.state.overview.activeProcessId;
-            
-            //get corresponding process
-            let activeProcess = this.$store.getters.getProcessById(pId);
-            if(activeProcess.startElement.id === this.pathStartElement.id){
-                console.log("is global start")
-                return true;
-            } else {
-                console.log("is local start")
-                return false
+    },
+    methods: {
+        createNewConnectionBlock(data) {
+            console.log(data)
+            let connectingBlock = {
+                id: uuid.v4(),
+                inputActivityIds: null,
+                outputPathIds: null,
+                type: data.newConnection.type,
+                value: null,
+                text: data.newConnection.text,
+                displayText: data.newConnection.blockName
             }
+            //create the connection
+            this.$store.dispatch("addConnectingBlockAction", {connectingBlock})
+
+            //insert connection into path
+            let dataForInsert = {
+                elementId: data.elementId, 
+                type: "ConnectingBlock",
+                id: connectingBlock.id
+            }
+            this.insertNewConnectionBlock(dataForInsert)
         },
+        insertNewConnectionBlock(data) {
+            let currentPathElement
+            let elementIdx;
+
+            //first get element and idx after which new connection will get inserted
+            for(let idx = 0; idx < this.pathData.pathElements.length; idx++ ){
+                if(this.pathData.pathElements[idx].currentPathElementId === data.elementId){
+                    elementIdx = idx 
+                }
+            }
+            
+            let pathElement = {
+                prevPathElementId: null,
+                currentPathElementId: uuid.v4(),
+                currentProcessElement: {
+                    type: data.type,
+                    id: data.id,
+                },
+                nextPathElementId: null,
+            }
+            //insert new block into existing path after elemet id
+            let insertData = {
+                processPathId: this.pathData.id,
+                pathElement: pathElement
+            }
+            this.$store.dispatch("addProcessPathElementAction", insertData)
+        },
+        updateProcessData(activePathElementId){
+            this.$store.dispatch("setActiveProcessPathAction", {activePathId: this.pathData.id})
+        }
     },
     props: ["pathData"]
 }

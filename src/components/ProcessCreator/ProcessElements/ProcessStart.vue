@@ -29,7 +29,7 @@ export default {
 .start-circle {
   height: 4vh;
   width: 4vh;
-  border: 7px solid red;
+  border: 6px solid black;
   border-radius: 100%;
 }
 

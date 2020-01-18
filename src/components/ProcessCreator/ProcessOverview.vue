@@ -6,11 +6,7 @@
     <Sidebar v-if="this.isStepInformationVisible" />
     <div class="process-editor checkered">
       <div class="flex-row center-ver">
-          <Process></Process>
-      </div>
-      <!-- dont show if process activity is open -->
-      <div class="next-step-dialog" v-if="displayNextStep && !isStepInformationVisible">
-        <NextStepDialog @final-choice="createConnectingBlock" />
+          <Process/>
       </div>
     </div>
   </div>
@@ -19,7 +15,6 @@
 <script>
 import Sidebar from "./EditorElements/Sidebar";
 import ProcessActivity from "./ProcessElements/ProcessActivity";
-import NextStepDialog from "./ProcessElements/NextStepDialog";
 import ConnectingBlock from "./ProcessElements/ConnectingBlock";
 import Process from './ProcessElements/Process';
 
@@ -27,7 +22,6 @@ export default {
   name: "ProcessOverview",
   components: {
     ProcessActivity,
-    NextStepDialog,
     ConnectingBlock,
     Sidebar,
     Process

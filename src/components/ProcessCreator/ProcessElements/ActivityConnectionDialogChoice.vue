@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: 'NextStepDialogChoice',
+    name: 'ActivityConnectionDialogChoice',
     props: ["choiceData"],
     methods: {
         choiceClicked() {
@@ -30,6 +30,7 @@ export default {
         border: 1px solid rgb(212, 212, 212);
         box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
         border-radius: 15px;
-        width: fit-content
+        width: fit-content;
+        line-height: 2rem;
     }
 </style>

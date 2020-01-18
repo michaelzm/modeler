@@ -3,7 +3,7 @@
         <!-- no choice clicked -->
         <transition name="fade">
             <div class="first-level-choices">
-                <NextStepDialogChoice v-for="(item, index) in computeChoice()" :choiceData="item" :key="index" @choice="setNextStepType"></NextStepDialogChoice>
+                <ActivityConnectionDialogChoice v-for="(item, index) in computeChoice()" :choiceData="item" :key="index" @choice="setActivityConnectionType"></ActivityConnectionDialogChoice>
             </div>
         </transition>
         <!-- end of options -->
@@ -11,11 +11,11 @@
 </template>
 
 <script>
-import NextStepDialogChoice from './NextStepDialogChoice.vue'
+import ActivityConnectionDialogChoice from './ActivityConnectionDialogChoice.vue'
 export default {
-    name: 'NextStepDialog',
+    name: 'ActivityConnectionDialog',
     components: {
-        NextStepDialogChoice,
+        ActivityConnectionDialogChoice,
     },
     data() {
         return {
@@ -23,11 +23,12 @@ export default {
             finalNextStepType: "",
             generalChoice: [
             {text: "Weiter", type: "simpleNext", blockName: "Nächter Schritt wird ausgeführt"}, 
-            {text:"Prozess läuft erst weiter, wenn ein Ereignis eintritt", type: "eventNext"},
-            {text:"Prozess teilt sich ab hier auf", type: "splitNext"},
+            {text: "Prozess läuft erst weiter, wenn ein Ereignis eintritt", type: "eventNext"},
+            {text: "Prozess teilt sich ab hier auf", type: "splitNext"},
+            //{text: "Prozess endet hier", type: "processEnd"}
             ],
             eventChoice: [
-            {text: "Ereignis entspricht einem vorher bekanntem Zeitpunkt", type: "timeEvent", blockName: "Der nächste Schritt wird zum Zeitpunkt X ausgeführt"},
+            {text: "Ereignis entspricht einem vorher bekinanntem Zeitpunkt", type: "timeEvent", blockName: "Der nächste Schritt wird zum Zeitpunkt X ausgeführt"},
             {text: "Ereignis entspricht einem auftretenden Fehler", type: "failureEvent", blockName: "Der nächste Schritt wird bei einem auftretenden Fehler ausgeführt"},
             {text: "Ereignis entspricht einer eingehenden Nachricht", type: "messageEvent", blockName: "Der nächste Schritt wird bei einer eingehenden Nachricht ausgeführt"},
             ],
@@ -49,7 +50,7 @@ export default {
                 return this.splitChoice;
             }
         },
-        setNextStepType(type) {
+        setActivityConnectionType(type) {
             this.nextStepType = type;
             if(["eventNext", "splitNext"].indexOf(type) < 0){
                 this.finalNextStepType = type

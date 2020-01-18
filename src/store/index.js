@@ -40,7 +40,8 @@ const processPathModule = {
           }
         ]
       }
-    ]
+    ],
+    activePathId: null,
   },
   getters: {
     getProcessPathById: (state) => (id) => {
@@ -48,14 +49,26 @@ const processPathModule = {
     }
   },
   mutations: {
-
     addProcessPathMutation(state, payload) {
       state.processPaths.push(payload.processPath)
+    },
+    addProcessPathElementMutation(state, payload){
+        let path = state.processPaths.find(path => path.id === payload.processPathId)
+        path.pathElements.push(payload.pathElement)
+    },
+    setActiveProcessPathMutation(state, payload){
+      state.activePathId = payload.activePathId
     }
   },
   actions: {
     addProcessPathAction({ commit }, payload) {
       commit("addProcessPathMutation", payload)
+    },
+    addProcessPathElementAction({commit}, payload){
+      commit("addProcessPathElementMutation", payload)
+    },
+    setActiveProcessPathAction({commit}, payload){
+      commit("setActiveProcessPathMutation", payload)
     }
   }
 
@@ -77,6 +90,22 @@ const connectingBlockModule = {
       //
       text: "Der Prozess läuft in 5 Tagen weiter"
     }]
+  },
+  getters: {
+    getConnectingBlockById: (state) => (id) => {
+      let block = state.connectingBlocks.find(block => block.id === id)
+      return block;
+    }
+  },
+  mutations: {
+    addConnectingBlockMutation(state, payload){
+      state.connectingBlocks.push(payload.connectingBlock)
+    },
+  },
+  actions: {
+    addConnectingBlockAction({commit}, payload){
+      commit("addConnectingBlockMutation", payload)
+    }
   }
 }
 
@@ -192,6 +221,48 @@ const overviewModule = {
   }
 }
 
+const processCreator = {
+  state: {
+    displayNewActivity: false,
+    displayProcessOverview: false,
+    displayCreateNewProcess: true,
+  },
+  mutations: {
+    hideNewActivityMutation(state){
+      state.displayNewActivity = false
+    },
+    displayNewActivityMutation(state){
+      state.displayCreateNewProcess = false,
+      state.displayProcessOverview = false,
+      state.displayNewActivity = true
+    },
+    displayProcessOverviewMutation(state){
+      state.displayCreateNewProcess = false,
+      state.displayProcessOverview = true
+      state.displayNewActivity = false
+    },
+    displayNewProcessMutation(state){
+      state.displayCreateNewProcess = true,
+      state.displayProcessOverview = false,
+      state.displayNewActivity = false
+    }
+  },
+  actions: {
+    displayNewActivityAction({commit}){
+      commit("displayNewActivityMutation")
+    },
+    displayProcessOverviewAction({commit}){
+      commit("displayProcessOverviewMutation")
+    },
+    displayNewProcessAction({commit}){
+
+    },
+    hideNewActivityAction({commit}){
+      commit("hideNewActivityMutation")
+    }
+  }
+}
+
 /**
  * GENERAL STORE
  */
@@ -210,5 +281,6 @@ export default new Vuex.Store({
     connectingBlockStore: connectingBlockModule,
     processStore: processModule,
     processPathStore: processPathModule,
+    processCreatorStore: processCreator
   }
 })

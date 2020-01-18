@@ -1,19 +1,12 @@
 <template>
     <div class ="connecting-block flex-column center-hor">
-        <div class="input-arrow">
-            <div class="svg-connecting-arrow"></div>
-        </div>
-            <div class="connecting-to-next-step" v-if="shouldDisplayBlockData()">
-                <div class="block-element" v-text="blockData.blockName">
+            <div class="connecting-to-next-step" v-if="shouldDisplayBlockData()" @click="selectBlock">
+                <div class="block-element" v-text="blockData.displayText">
                 </div>
             </div>
-            <div class="output-arrow" v-if="shouldDisplayBlockData()">
-                <div class="svg-connecting-arrow"></div>
-            </div>
-         <!-- option to add next step -->
-        <div class="add-process-step" @click="createNewActivity">
-            <div class="svg-add-process-step"/>
-        </div>
+<!--             <div class="add-new-activity" v-if="!shouldDisplayBlockData()" @click="createNewActivity()">
+                add new activity
+            </div> -->
     </div>
 </template>
 
@@ -31,6 +24,9 @@ export default {
         },
         createNewActivity() {
             this.$emit("create-new-activity")
+        },
+        selectBlock() {
+            this.$emit("is-selected")
         }
     },
 }
@@ -54,22 +50,10 @@ export default {
         width: fit-content;
     }
 
-    .input-arrow {
-        height: 4vh;
-        width: 4vw;
-    }
 
     .output-arrow {
         height: 4vh;
         width: 4vw;
-    }
-
-    .svg-connecting-arrow {
-        background-image: url(../assets/connecting-arrow.svg);
-        background-repeat: no-repeat;
-        height: 100%;
-        width: 100%;
-        background-size: 100% 100%;
     }
 
     .add-process-step {

@@ -1,6 +1,6 @@
 <template>
     <div class="new-process-wrapper checkered flex-column center-ver center-hor">
-        <div class="create-new-process">
+        <div class="create-new-process" v-bind:class="{ready: allInputsFilled}">
             <div class="top-part flex-column center-hor">
                 <h3>Neuen Prozess anlegen</h3>
                 <div class="new-process-illustration">
@@ -66,8 +66,7 @@ export default {
 
             //set process Active
             this.$store.dispatch('setProcessActiveAction', {id: this.form.id})
-
-            this.$emit("finish-process")
+            this.$store.dispatch('displayProcessOverviewAction')
         },
         createNewProcess() {
             let newProcess = {
@@ -105,19 +104,10 @@ export default {
                     prevPathElementId: '0',
                     currentPathElementId: '1',
                     currentProcessElement: {
-                    type: "Activity",
-                    id: '1',
+                        type: "Activity",
+                        id: '1',
                     },
-                    nextPathElementId: '2'
-                },
-                { 
-                    prevPathElementId: '1',
-                    currentPathElementId: '2',
-                    currentProcessElement: {
-                    type: "Activity",
-                    id: '2',
-                    },
-                    nextPathElementId: 'null'
+                    nextPathElementId: null
                 }]
             }
 
@@ -136,6 +126,12 @@ export default {
     h3 {
         margin-top: 2vh;
     }
+
+    .ready {
+        box-shadow: 0 5px 10px rgba(2, 255, 99, 0.2), 0 15px 40px rgba(2, 255, 99, 0.2) !important;
+        transition: box-shadow 1s;
+    }
+
     .new-process-wrapper {
         height: 100%;
         min-height: 100vh;
@@ -149,6 +145,7 @@ export default {
         height: 90%;
         min-height: 90vh;
         box-shadow: 0 5px 10px rgba(154,160,185,.1), 0 15px 40px rgba(166,173,201,.2);
+        transition: box-shadow 1s;
     }
 
     .divider {
@@ -225,13 +222,13 @@ export default {
         right: 2vh;
         width: 6vh;
         height: 6vh;
-        background-color: rgba(30, 238, 65, 0.658);
+        background-color: white;
         border-radius: 100%;
-        box-shadow: 0 5px 10px rgba(154,160,185,.1), 0 15px 40px rgba(166,173,201,.2);
     }
 
     .input-indicator {
         width: 10vw;
+        line-height: 1.5rem
     }
     
 </style>

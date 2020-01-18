@@ -1,8 +1,8 @@
 <template>
     <div class = "noselect">
-      <ProcessOverview v-if="displayProcessOverview" @create-new-activity="goTo"/>
-      <CreateNewProcess v-if="displayCreateNewProcess" @finish-process="saveProcess"/>
-      <BaseNewActivity v-if="displayCreateNewActivity" @finish-activity="saveActivity"/>
+      <ProcessOverview v-if="overview()" />
+      <CreateNewProcess v-if="newProcess()"/>
+      <BaseNewActivity v-if="newActivity()"/>
     </div>
 </template>
 
@@ -29,6 +29,15 @@ export default {
             let activity = {name:'Ware im System', id:'28241628', input_data:['Auftragsliste'], input_it: [], output_data:['Lieferantenbestätigung']}
             this.$store.dispatch('addActivityAction', {activity})
             this.goTo("displayOverview")
+        },
+        newActivity(){
+          return this.$store.state.processCreatorStore.displayNewActivity
+        },
+        newProcess() {
+          return this.$store.state.processCreatorStore.displayCreateNewProcess
+        },
+        overview() {
+          return this.$store.state.processCreatorStore.displayProcessOverview
         },
         saveProcess() {
             //save provess to vuex

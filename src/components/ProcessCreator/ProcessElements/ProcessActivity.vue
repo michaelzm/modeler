@@ -34,17 +34,6 @@
         </div>
         <div class="process-step-name bold" v-text="activity.name">Placeholder</div>
       </div>
-      <div
-        class="next-process-step-container flex-row"
-        @click="toggleNextStep"
-        v-if="this.isActivityClicked"
-      >
-        <div class="next-process-step noselect bold">Nächster Schritt</div>
-        <div class="circle-connected flex-column center-hor">
-          <div class="connecting-to-center-line-ver"></div>
-          <div class="circle circle-right"></div>
-        </div>
-      </div>
     </div>
 
     <!-- right side informations -->
@@ -89,17 +78,17 @@ export default {
   },  
   props: ["activity"],
   methods: {
+    hideInformations() {
+      this.unselectAll();
+      this.isActivityClicked = false,
+      this.isActivityActive = false;
+      this.$emit("is-unselected")
+    },
     unselectAll() {
       this.isActivitySelected = false;
       this.isInputDataSelected = false;
       this.isInputItSelected = false;
       this.isOutputDataSelected = false;
-    },
-    toggleNextStep() {
-      this.isActivitySelected = false;
-      this.isActivityClicked = false;
-      this.isNextStepActive = !this.isNextStepActive;
-      this.$emit("show-nextstep");
     },
     markActive(type) {
       //first check if red border exists and if so, remove it
@@ -129,6 +118,7 @@ export default {
 
             //also mark activity red
             this.isActivityActive = true;
+            this.$emit("is-selected")
           } else if (this.isActivityActive) {
             //if red border active and we click, we should remove red border and mark activity
             this.isActivityActive = false;
