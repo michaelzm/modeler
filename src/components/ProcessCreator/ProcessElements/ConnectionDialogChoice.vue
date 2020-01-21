@@ -6,11 +6,11 @@
 
 <script>
 export default {
-    name: 'ActivityConnectionDialogChoice',
+    name: 'ConnectionDialogChoice',
     props: ["choiceData"],
     methods: {
         choiceClicked() {
-            this.$emit("choice", this.choiceData.type)
+            this.$emit("choice", this.choiceData)
         },
     }
 }

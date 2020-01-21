@@ -3,7 +3,7 @@
         <!-- no choice clicked -->
         <transition name="fade">
             <div class="first-level-choices">
-                <ActivityConnectionDialogChoice v-for="(item, index) in computeChoice()" :choiceData="item" :key="index" @choice="setActivityConnectionType"></ActivityConnectionDialogChoice>
+                <ConnectionDialogChoice v-for="(item, index) in computeChoice()" :choiceData="item" :key="index" @choice="setConnectionType"></ConnectionDialogChoice>
             </div>
         </transition>
         <!-- end of options -->
@@ -11,16 +11,16 @@
 </template>
 
 <script>
-import ActivityConnectionDialogChoice from './ActivityConnectionDialogChoice.vue'
+import ConnectionDialogChoice from './ConnectionDialogChoice.vue'
 export default {
-    name: 'ActivityConnectionDialog',
+    name: 'ConnectionDialog',
     components: {
-        ActivityConnectionDialogChoice,
+        ConnectionDialogChoice,
     },
     data() {
         return {
             nextStepType: "",
-            finalNextStepType: "",
+            finalStepReached: false,
             generalChoice: [
             {text: "Weiter", type: "simpleNext", blockName: "Nächter Schritt wird ausgeführt"}, 
             {text: "Prozess läuft erst weiter, wenn ein Ereignis eintritt", type: "eventNext"},
@@ -37,10 +37,11 @@ export default {
             {text: "Es wird nur einer der abzweigenden Prozesspfade abängig von einer Bedingung ausgeführt", type: "xorSplit", blockName: "Eine Bedingung entscheidet, welcher der folgenden Pfade als einziger ausgeführt wird"},
             {text: "Es können mehrere der abzweigenden Prozesspfade abhängig von einer Bedingung ausgeführt werden", type: "orSplit", blockName: "Eine Bedingung entscheidet, welche der folgenden Pfade ausgeführt werden können "},
                 
-            ]
+            ],
         }
     },
     methods: {
+        //returns the items to display as dialog choices v-for
         computeChoice() {
             if(this.nextStepType === ""){
                 return this.generalChoice;
@@ -50,34 +51,39 @@ export default {
                 return this.splitChoice;
             }
         },
-        setActivityConnectionType(type) {
-            this.nextStepType = type;
-            if(["eventNext", "splitNext"].indexOf(type) < 0){
-                this.finalNextStepType = type
-
-                //get the choice obj from one of the three arrays
-
-                let choice = undefined;
-                for(let i = 0; i < this.generalChoice.length; i++){
-                    if(this.generalChoice[i].type === type){
-                        choice = this.generalChoice[i];
+        //gets called when clicked on a dialog item
+        setConnectionType(selection) {
+            if(!this.finalStepReached){
+                //if its simple next, immediately proceed to emit event bc no subdialogs possible
+                if(selection.type === "simpleNext") {
+                    this.$emit("simple-connection", selection)
+                //means we  need to display subdialog items
+                } else {
+                    switch(selection.type){
+                        case "eventNext":
+                            this.nextStepType = "eventNext"
+                            break;
+                        case "splitNext":
+                            this.nextStepType = "splitNext"
+                            break;
                     }
+                    //prevent emitting mutliple events
+                    this.finalStepReached = true;
                 }
-                for(let i = 0; i < this.eventChoice.length; i++){
-                    if(this.eventChoice[i].type === type){
-                        choice = this.eventChoice[i];
-                    }
+            } else {
+                if (this.nextStepType === "eventNext"){
+                    //means we connect activities
+                    this.$emit("event-connection", selection)
+                } else {
+                    this.$emit("split-connection", selection)
                 }
-                for(let i = 0; i < this.splitChoice.length; i++){
-                    if(this.splitChoice[i].type === type){
-                        choice = this.splitChoice[i];
-                    }
-                }
-                this.$emit("final-choice", choice);
+                this.resetChoices()
             }
+            
         },
         resetChoices() {
-            this.isChoiceClicked = false;
+            this.nextStepType = ""
+            this.finalStepReached = false
         },
     }
 }

@@ -2,7 +2,11 @@
     <div class="process-path flex-column center-hor">
         <!-- woll contain one or n process path elements-->
         <ProcessPathElement v-for="(item, index) in pathElements" :pathElement="item" :key="index" 
-        @update-active-process-data="updateProcessData" @store-activity-connection="createNewConnectionBlock"/>
+        @update-active-process-data="updateProcessData" 
+        @store-activity-connection="createNewActivityConnectionBlock"
+        @store-path-connection="createNewPathConnectionBlock"
+        />
+
     </div>
 </template>
 
@@ -30,12 +34,12 @@ export default {
         },
     },
     methods: {
-        createNewConnectionBlock(data) {
-            console.log(data)
+        createNewActivityConnectionBlock(data) {
+            console.log("create new activity connection in store")
             let connectingBlock = {
                 id: uuid.v4(),
-                inputActivityIds: null,
-                outputPathIds: null,
+                inputActivityId: null,
+                outputPathId: null,
                 type: data.newConnection.type,
                 value: null,
                 text: data.newConnection.text,
@@ -50,9 +54,16 @@ export default {
                 type: "ConnectingBlock",
                 id: connectingBlock.id
             }
-            this.insertNewConnectionBlock(dataForInsert)
+
+            console.log("insert the created activity connection into the path")
+            this.insertNewActivityConnectionBlock(dataForInsert)
         },
-        insertNewConnectionBlock(data) {
+        createNewPathConnectionBlock(data){
+            console.log("end current path in new path connection")
+            console.log("create new path and set start also to new path connection")
+            //means we end current path and connect its end element to new connection block
+        },
+        insertNewActivityConnectionBlock(data) {
             let currentPathElement
             let elementIdx;
 
