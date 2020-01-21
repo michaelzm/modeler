@@ -92,6 +92,7 @@ export default {
         createNewProcessPath() {
             let processPath = {
                 id: this.pathId,
+                pathOrder: 1,
                 pathStartElement: {
                     id: this.startElementId,
                     name: this.form.processStart 

@@ -42,7 +42,7 @@ export default {
                 displayText: data.newConnection.blockName
             }
             //create the connection
-            this.$store.dispatch("addConnectingBlockAction", {connectingBlock})
+            this.$store.dispatch("addConnectingActivitiesBlockAction", {connectingBlock})
 
             //insert connection into path
             let dataForInsert = {

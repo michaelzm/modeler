@@ -30,7 +30,7 @@ export default {
     return {
       displayNextStep: false,
       isStepInformationVisible: false,
-      connectingBlocks: []
+      connectingActivitiesBlocks: []
     };
   },
   computed: {
@@ -78,7 +78,7 @@ export default {
       this.activities.push(activity);
     },
     createConnectingBlock(block) {
-      this.connectingBlocks.push(block);
+      this.connectingActivitiesBlocks.push(block);
     },
     deleteActivity(id) {
       /*   for(var i = 0; i < this.activities.length; i++){

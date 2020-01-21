@@ -74,7 +74,7 @@ export default {
             //check if it is simple next
             //if yes, dont show arrow
             if(this.isConnectingBlock){
-                let connection = this.$store.getters.getConnectingBlockById(this.pathElement.currentProcessElement.id)
+                let connection = this.$store.getters.getConnectingActivitiesBlockById(this.pathElement.currentProcessElement.id)
                 if(connection.type === "simpleNext"){
                     return true
                 } else {
@@ -94,11 +94,14 @@ export default {
            if(choice.type === "simpleNext"){
                //means we can trigger add new activity
                this.prepareCreateNewActivity();
+           } else if(choice.type === "andSplit"){
+               //split means we end t
+               
            }
         },
         getConnectingBlock() {
             let id = this.pathElement.currentProcessElement.id
-            let connectingBlock = this.$store.getters.getConnectingBlockById(id)
+            let connectingBlock = this.$store.getters.getConnectingActivitiesBlockById(id)
             return connectingBlock
         },
         prepareCreateNewActivity() {

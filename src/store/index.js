@@ -10,12 +10,13 @@ const processPathModule = {
     processPaths: [
       {
         id: '124',
+        pathOrder: 1,
         // element zb start oder aufteilung
         pathStartElement: {
           id: "12312231",
           name: "Start"
         },
-        //
+        // element zb aufteilung oder zusammenführung
         pathEndElement: {
           id: '1231231',
           name: "Endelement"
@@ -76,35 +77,54 @@ const processPathModule = {
 // connectingblock und acvitiy evtl in eigemen store zusammenfassen
 const connectingBlockModule = {
   state: {
-    connectingBlocks: [{
+    connectingActivitiesBlocks: [{
       //
       id: '131231',
       //
-      inputActivityIds: ['1'],
+      inputActivityId: '1',
       //
-      outputPathIds: ['1', '2'],
+      outputActivityId: '2',
       //
       type: "time",
       //
       value: "5 Tage",
       //
       text: "Der Prozess läuft in 5 Tagen weiter"
+    }],
+    connectingPathsBlocks: [{
+      id: "12313123",
+      inputPathId: ["2", "3"],
+      outputPathIds: ["4", "5"],
+      type: "split",
+      value: "aufteilungValue",
+      text: "Der Prozess teilt sich auf"
     }]
   },
   getters: {
-    getConnectingBlockById: (state) => (id) => {
-      let block = state.connectingBlocks.find(block => block.id === id)
+    getConnectingActivitiesBlockById: (state) => (id) => {
+      let block = state.connectingActivitiesBlocks.find(block => block.id === id)
       return block;
-    }
+    },
+    getConnectingPathsBlockById: (state) => (id) => {
+      let block = state.connectingPathsBlocks.find(block => block.id === id)
+      return block;
+    },
+    
   },
   mutations: {
-    addConnectingBlockMutation(state, payload){
-      state.connectingBlocks.push(payload.connectingBlock)
+    addConnectingActivitiesBlockMutation(state, payload){
+      state.connectingActivitiesBlocks.push(payload.connectingBlock)
+    },
+    addConnectingPathsBlockMutation(state, payload){
+      state.connectingPathsBlocks.push(payload.connectingBlock)
     },
   },
   actions: {
-    addConnectingBlockAction({commit}, payload){
-      commit("addConnectingBlockMutation", payload)
+    addConnectingActivitiesBlockAction({commit}, payload){
+      commit("addConnectingActivitiesBlockMutation", payload)
+    },
+    addConnectingPathsBlockAction({commit}, payload){
+      commit("addConnectingPathsBlockMutation", payload)
     }
   }
 }
@@ -278,7 +298,7 @@ export default new Vuex.Store({
   modules: {
     overview: overviewModule,
     activityStore: activityModule,
-    connectingBlockStore: connectingBlockModule,
+    connectingActivitiesBlockstore: connectingBlockModule,
     processStore: processModule,
     processPathStore: processPathModule,
     processCreatorStore: processCreator
