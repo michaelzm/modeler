@@ -58,7 +58,37 @@ export default {
             console.log("insert the created activity connection into the path")
             this.insertNewActivityConnectionBlock(dataForInsert)
         },
+        /**
+         * data contains elementId which is the id of last element in path
+         * newConnection which handles {blockName:text:type}
+         * @param{elementId} String
+         * @param{newConnection} Object
+         */
         createNewPathConnectionBlock(data){
+            //create new pathConnectionBlock
+            var pathCBlock = {
+                id: uuid.v4(),
+                inputPathId: this.pathData.id,
+                outputPathIds: undefined,
+                type: data.newConnection.type,
+                text: data.newConnection.text,
+                value: data.newConnection.blockName
+            }
+
+            this.$store.dispatch("addConnectingPathsBlockAction", {connectingBlock:pathCBlock})
+
+            //end path in connection block
+            console.log(data)
+
+            //contains id and block name
+            var pathEndElement = {
+                id: pathCBlock.id,
+
+                //not sure about name attribute
+                name: "split"
+            }
+
+            this.$store.dispatch("setProcessPathEndElement",{processPathId: this.pathData.id, endElement:pathEndElement})
             console.log("end current path in new path connection")
             console.log("create new path and set start also to new path connection")
             //means we end current path and connect its end element to new connection block

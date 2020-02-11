@@ -118,6 +118,9 @@ export default {
          //hide dialogs
         this.displayCreateNext = false;
     },
+    /**
+     * @param selection split event simplenext
+     */
     handleSplitConnection(selection){
         let elementId = this.pathElement.currentPathElementId;
        this.$emit("store-path-connection", {
@@ -135,7 +138,7 @@ export default {
       //is split: ends path -> store-path-connection
 
       //now differenciate a bunch of options
-      switch (choice.type) {
+      /* switch (choice.type) {
         case "simpleNext":
           this.prepareCreateNewActivity();
           break;
@@ -154,7 +157,7 @@ export default {
             newConnection: choice,
             elementId: elementId
           });
-      }
+      } */
     },
     getConnectingBlock() {
       let id = this.pathElement.currentProcessElement.id;

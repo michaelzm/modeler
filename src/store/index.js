@@ -14,12 +14,12 @@ const processPathModule = {
         // element zb start oder aufteilung
         pathStartElement: {
           id: "12312231",
-          name: "Start"
+          name: "MOCKStart"
         },
         // element zb aufteilung oder zusammenführung
         pathEndElement: {
           id: '1231231',
-          name: "Endelement"
+          name: "MOCKEndelement"
         },
         //
         pathElements: [
@@ -59,6 +59,11 @@ const processPathModule = {
     },
     setActiveProcessPathMutation(state, payload){
       state.activePathId = payload.activePathId
+    },
+
+    setPathEndElement(state, payload){
+      let path  = state.processPaths.find(path => path.id === payload.processPathId)
+      path.pathEndElement = payload.endElement
     }
   },
   actions: {
@@ -70,6 +75,13 @@ const processPathModule = {
     },
     setActiveProcessPathAction({commit}, payload){
       commit("setActiveProcessPathMutation", payload)
+    },
+    /**
+    * @param processPathId
+    * @param endElement
+    */
+    setProcessPathEndElement({commit}, payload){
+      commit("setPathEndElement", payload)
     }
   }
 
@@ -89,7 +101,7 @@ const connectingBlockModule = {
       //
       value: "5 Tage",
       //
-      text: "Der Prozess läuft in 5 Tagen weiter"
+      text: "MOCKDer Prozess läuft in 5 Tagen weiter"
     }],
     connectingPathsBlocks: [{
       id: "12313123",
